@@ -1,7 +1,7 @@
 #handsimage {
     width: 500px;
 }
-.btn {
+.MyHand_btn {
     border-radius: 50%;
     margin: 10px;
     border: none;
@@ -12,7 +12,7 @@
     height: 35px;
     cursor: pointer;
 }
-.btn:focus {
+.MyHand_btn:focus {
     outline: none;
 }
 #btnFold {
@@ -30,7 +30,7 @@
     background-color: #1abc9c;
     border: 3px solid #1abc9c;
 }
-.card {
+.MyHand_card {
     margin: 10px;
     width: 100px;
     height: 150px;
