@@ -4,10 +4,14 @@ import './styles/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { IntlProvider } from 'react-intl'
+import {Provider} from 'react-redux';
+import store from './store/index';
 
 ReactDOM.render(
     <IntlProvider locale='de'>
-        <App/>
+        <Provider store={store}>
+           <App/>
+        </Provider>
     </IntlProvider>,
     document.getElementById('root')
 );

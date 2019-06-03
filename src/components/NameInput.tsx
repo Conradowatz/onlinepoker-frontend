@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { setUsername} from "../actions";
 
 import '../styles/NameInput.css';
 
@@ -21,6 +23,7 @@ export default class NameInput extends React.Component<props, state> {
     handleNameInput(event: React.KeyboardEvent) {
         if(event.key === 'Enter'){
             console.log("enter");
+
         }
     }
 }
