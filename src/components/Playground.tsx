@@ -3,16 +3,37 @@ import MyHand from "./MyHand";
 import Card from "./Card";
 
 import '../styles/Playground.css';
+import NameInput from "./NameInput";
+import LobbyChooser from "./LobbyChooser";
 
-export default class Playground extends React.Component {
+interface state {
+    showNameInput: boolean,
+    showLobbyChooser: boolean,
+}
+
+interface props {
+
+}
+
+export default class Playground extends React.Component<props, state> {
+    constructor(props: props) {
+        super(props);
+        this.state = {
+            showNameInput: false,
+            showLobbyChooser: true
+        };
+    }
     render() {
+        const {showNameInput, showLobbyChooser } = this.state;
         return (
             <div>
-                <div id="title">Texas Hold'em Poker</div>
-                <div id="playground">
+                <div id={'title'}>Texas Hold'em Poker</div>
+                <div id={'playground'}>
+                    { showNameInput && <NameInput/> }
+                    { showLobbyChooser && <LobbyChooser/> }
                     <Card/>
                 </div>
-            <MyHand/>
+                <MyHand/>
             </div>
         );
     }

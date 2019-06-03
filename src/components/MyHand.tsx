@@ -21,13 +21,16 @@ export default class MyHand extends React.Component<props, state> {
         //const { myCoins } = this.state;
         return (
             <div>
-                <button className="MyHand_btn" id="btnFold"></button>
-                <button className="MyHand_btn" id="btnCheck"></button>
-                <button className="MyHand_btn" id="btnRaise"></button>
+                <button className={'MyHand_btn'} id={'btnFold'} title={'Aussteigen'}/>
+                <button className={'MyHand_btn'} id={'btnCheck'} title={'Mitgehen'}/>
+                <button className={'MyHand_btn'} id={'btnRaise'} title={'Erhöhen'}/>
                 <div id="mySeat">
-                    <div className="MyHand_card"></div>
-                    <div className="MyHand_card"></div>
-                    <div id="myCoins"><img id="chipImage" src="../assets/chip.png" alt={""}/>{this.state.myCoins}</div>
+                    <div className="MyHand_card"/>
+                    <div className="MyHand_card"/>
+                    <div id={'myCoins'}>
+                        <img id={'chipImage'} src={'../assets/chip.png'} alt={''}/>
+                        {this.state.myCoins}
+                    </div>
                 </div>
             </div>
 

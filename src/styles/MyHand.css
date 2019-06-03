@@ -17,19 +17,34 @@
 }
 #btnFold {
     background-image:url('../assets/cancel.png');
-    background-color: #e74c3c;
     border: 3px solid #e74c3c;
+    background-color: #e74c3c;
 }
+#btnFold:hover{
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
 #btnCheck {
     background-image:url('../assets/checkmark.png');
     background-color: #2ecc71;
     border: 3px solid #2ecc71;
 }
+#btnCheck:hover{
+    background-color: #27ae60;
+    border-color: #27ae60;
+}
+
 #btnRaise {
     background-image:url('../assets/raise.png');
     background-color: #1abc9c;
     border: 3px solid #1abc9c;
 }
+#btnRaise:hover{
+    background-color: #16a085;
+    border-color: #16a085;
+}
+
 .MyHand_card {
     margin: 10px;
     width: 100px;
