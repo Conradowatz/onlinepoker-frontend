@@ -1,15 +1,16 @@
 import * as React from 'react';
 
 import '../styles/NameInput.css';
+import {PokerClient} from "../pokerapi/PokerClient";
 
 interface  state {
 }
 
 interface props {
-
+  api: PokerClient;
 }
 
-export default class LobbyChooser extends React.Component<props, state> {
+export default class LobbyList extends React.Component<props, state> {
     render() {
         return (
             <div id={'inputContainer'}>

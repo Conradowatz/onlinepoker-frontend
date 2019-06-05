@@ -1,10 +1,11 @@
 import React from 'react';
-import Playground from './components/Playground';
+import Game from './components/Game';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Playground/>
+      <div id={'title'}>Texas Hold'em Poker</div>
+      <Game/>
     </div>
   );
 }
