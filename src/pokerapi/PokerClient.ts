@@ -1,59 +1,44 @@
-import {client as WebSocketClient, connection} from "websocket";
 import {EventEmitter} from "events";
 import {
   ClientCommand,
   ClientMessage,
   Command,
   PokerMessage,
-  ServerMessage
 } from "./messages/PokerMessage";
 
 export class PokerClient extends EventEmitter {
 
-  wsClient: WebSocketClient;
-  private connection: connection | undefined;
+  wsClient: WebSocket;
 
   constructor(public address: string, public autoReconnect=false) {
     super();
-    this.wsClient = new WebSocketClient();
+    this.wsClient = new WebSocket(address, "poker1");
 
     this.registerListeners();
-    this.wsClient.connect(address, "poker1");
   }
 
   private registerListeners() {
 
-    this.wsClient.on("connect", (connection) => {
-
-      this.connection = connection;
+    this.wsClient.onopen = (event) => {
       this.emit("ready");
+    };
 
-      //pipe incoming messages trough
-      connection.on("message", (data) => {
-        if (data.utf8Data !== undefined) {
-          let message = JSON.parse(data.utf8Data);
-          this.emit(message.command, message.data);
-        }
-      });
+    //pipe incoming messages trough
+    this.wsClient.onmessage = (message) => {
+      let pokerMessage = JSON.parse(message.data);
+      this.emit(pokerMessage.command, pokerMessage.data);
+    };
 
-      connection.on("error", (err) => {
-        this.emit("error", err);
-      });
+    this.wsClient.onerror = (event) => {
+      this.emit("error", event);
+    };
 
-      connection.on("close", () => {
-        this.emit("close");
-        if (this.autoReconnect) {
-          setTimeout(() => this.wsClient.connect(this.address, "poker1"), 3000);
-        }
-      });
-    });
-
-    this.wsClient.on("connectFailed", (err) => {
-      this.emit("failed", err);
+    this.wsClient.onclose = (event) => {
+      this.emit("close");
       if (this.autoReconnect) {
-        setTimeout(() => this.wsClient.connect(this.address, "poker1"), 3000);
+        setTimeout(() => this.wsClient = new WebSocket(this.address, "poker1"), 3000);
       }
-    });
+    };
   }
 
   public sendMessage(command: ClientCommand | Command, message?: PokerMessage) {
@@ -62,9 +47,7 @@ export class PokerClient extends EventEmitter {
       command: command,
       data: message
     };
-    if (this.connection !== undefined) {
-      this.connection.sendUTF(JSON.stringify(cm));
-    }
+    this.wsClient.send(JSON.stringify(cm));
   }
 
   public sendMessageCall(command: ClientCommand | Command, callback: (message?: PokerMessage) => void, message?: PokerMessage) {

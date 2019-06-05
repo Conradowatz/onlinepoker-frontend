@@ -1,9 +1,6 @@
 import * as React from 'react';
-import MyHand from "./MyHand";
 import Card from "./Card";
-
 import '../styles/Playground.css';
-import NameInput from "./NameInput";
 import LobbyList from "./LobbyList";
 import Lobby from "./Lobby";
 import {PokerClient} from "../pokerapi/PokerClient";

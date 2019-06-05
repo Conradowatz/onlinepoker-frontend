@@ -1,16 +1,19 @@
 import * as React from 'react';
 
 import '../styles/NameInput.css';
+import {PokerClient} from "../pokerapi/PokerClient";
+import {FormEvent} from "react";
 
 interface  State {
     showNameInput: boolean
 }
 
 interface Props {
+    api: PokerClient
 }
 
 export default class LobbyList extends React.Component<Props, State> {
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
         this.state = {
             showNameInput: false
@@ -29,8 +32,8 @@ export default class LobbyList extends React.Component<Props, State> {
         )
     }
 
-    handleLobbyChosen(event: {target: HTMLInputElement}) {
+    handleLobbyChosen(event: FormEvent<HTMLInputElement>) {
         console.log("enter");
-        console.log(event.target.value);
+        console.log(event);
     }
 }
