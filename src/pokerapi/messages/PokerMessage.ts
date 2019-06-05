@@ -1,6 +1,3 @@
-import {Type} from "class-transformer";
-import {IsAlphanumeric, IsDefined, IsIn, IsOptional, ValidateIf} from "class-validator";
-
 export class PokerMessage {
 
 }
@@ -48,16 +45,12 @@ let commandsWithoutData = [
   "leave_lobby"
 ];
 
-export class ServerMessage {
+export interface ServerMessage {
   command: Command | ServerCommand;
-  data: PokerMessage;
+  data?: PokerMessage;
 }
 
-export class ClientMessage {
-  @IsIn(commands.concat(clientCommands))
+export interface ClientMessage {
   command: Command | ClientCommand;
-  @ValidateIf(o => !commandsWithoutData.includes(o.command))
-  @IsDefined()
-  @Type(() => PokerMessage)
-  data: PokerMessage;
+  data?: PokerMessage;
 }

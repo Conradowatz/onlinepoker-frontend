@@ -8,6 +8,6 @@ const App: React.FC = () => {
       <Game/>
     </div>
   );
-}
+};
 
 export default App;

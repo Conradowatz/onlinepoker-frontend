@@ -1,6 +1,5 @@
 import {client as WebSocketClient, connection} from "websocket";
 import {EventEmitter} from "events";
-import {deserialize, serialize} from "class-transformer";
 import {
   ClientCommand,
   ClientMessage,
@@ -12,7 +11,7 @@ import {
 export class PokerClient extends EventEmitter {
 
   wsClient: WebSocketClient;
-  private connection: connection;
+  private connection: connection | undefined;
 
   constructor(public address: string, public autoReconnect=false) {
     super();
@@ -31,8 +30,10 @@ export class PokerClient extends EventEmitter {
 
       //pipe incoming messages trough
       connection.on("message", (data) => {
-        let message = deserialize(ServerMessage, data.utf8Data);
-        this.emit(message.command, message.data);
+        if (data.utf8Data !== undefined) {
+          let message = JSON.parse(data.utf8Data);
+          this.emit(message.command, message.data);
+        }
       });
 
       connection.on("error", (err) => {
@@ -59,9 +60,11 @@ export class PokerClient extends EventEmitter {
 
     let cm:ClientMessage = {
       command: command,
-      data:message
+      data: message
     };
-    this.connection.sendUTF(serialize(cm));
+    if (this.connection !== undefined) {
+      this.connection.sendUTF(JSON.stringify(cm));
+    }
   }
 
   public sendMessageCall(command: ClientCommand | Command, callback: (message?: PokerMessage) => void, message?: PokerMessage) {
