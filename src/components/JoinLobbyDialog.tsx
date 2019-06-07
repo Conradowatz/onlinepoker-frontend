@@ -27,11 +27,14 @@ export default class JoinLobbyDialog extends React.Component<Props, State> {
         return (
             <Dialog
                 children={
-                    <input
-                        type="text"
-                        onKeyPress={(e) => {if (e.key === "Enter") this.props.onJoin(this.state.name.trim())}}
-                        value={this.state.name} onChange={(e) => this.checkName(e)}
-                    />
+                    <div>
+                        <p>Your Name:</p>
+                        <input
+                            type="text"
+                            onKeyPress={(e) => {if (e.key === "Enter") this.props.onJoin(this.state.name.trim())}}
+                            value={this.state.name} onChange={(e) => this.checkName(e)}
+                        />
+                    </div>
                 }
                 buttons={[
                     <button onClick={this.props.onCancel} key={0}>Cancel</button>,

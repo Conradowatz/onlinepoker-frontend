@@ -10,7 +10,9 @@ interface  State {
 }
 
 interface Props {
-  api: PokerClient
+  api: PokerClient,
+  onJoin: (id: string, name: string) => void,
+  onSpectate: (id: string) => void
 }
 
 export default class LobbyList extends React.Component<Props, State> {
@@ -54,7 +56,7 @@ export default class LobbyList extends React.Component<Props, State> {
                   <td>{`${lobby.currentPlayers}/${lobby.maxPlayers}`}</td>
                   <td>
                     {lobby.joinable && <button onClick={(e) => this.showJoinLobby(lobby.id)}>Join</button>}
-                    <button onClick={(e) => this.spectateLobby(lobby.id)}>Spectate</button>
+                    <button onClick={(e) => this.props.onSpectate(lobby.id)}>Spectate</button>
                   </td>
                 </tr>
             )}
@@ -79,14 +81,10 @@ export default class LobbyList extends React.Component<Props, State> {
     this.setState({showJoinLobbyDialog: true});
   }
 
-  private spectateLobby(id: string) {
-    //TODO
-  }
-
   private joinLobby(name: string) {
     this.setState({showJoinLobbyDialog: false});
     if (this.selectedLobby !== undefined) {
-      //TODO
+      this.props.onJoin(this.selectedLobby, name);
     }
   }
 }

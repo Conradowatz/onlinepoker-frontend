@@ -49,7 +49,7 @@ export interface Lobby extends PokerMessage {
   availableGamemodes: string[];
   players: Map<number, Player>; //key=Player.id
   leader: number; //Player.id
-  youAreLeader: boolean;
+  yourId: number;
 }
 
 export interface Card extends PokerMessage {

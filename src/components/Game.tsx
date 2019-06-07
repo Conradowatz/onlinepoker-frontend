@@ -3,11 +3,14 @@ import '../styles/Playground.css';
 import LobbyList from "./LobbyList";
 import Lobby from "./Lobby";
 import {PokerClient} from "../pokerapi/PokerClient";
-import {CreateLobbyRequest} from '../pokerapi/messages/ApiObjects';
+import {CreateLobbyRequest, JoinLobbyRequest, JoinLobbyResponse, Lobby as ApiLobby} from '../pokerapi/messages/ApiObjects';
+import Dialog from "./Dialog";
 
 interface State {
     showLobbyList: boolean,
     showLobby: boolean,
+    lobby?: ApiLobby,
+    shownError: string | null
 }
 
 interface Props {
@@ -23,18 +26,34 @@ export default class Game extends React.Component<Props, State> {
         super(props);
         this.state = {
             showLobbyList: false,
-            showLobby: false
+            showLobby: false,
+            shownError: null
         };
 
         this.api = new PokerClient("ws://localhost:8080", true);
         this.connectToServer();
     }
     render() {
-        const {showLobbyList, showLobby } = this.state;
         return (
                 <div id={'game'}>
-                    { showLobbyList && <LobbyList api={this.api}/> }
-                    { showLobby && <Lobby api={this.api}/> }
+                    {
+                      this.state.showLobbyList &&
+                      <LobbyList
+                          api={this.api}
+                          onJoin={(id, name) => this.joinLobby(id, false, name)}
+                          onSpectate={(id) => this.joinLobby(id, true)}/>
+                    }
+                    {
+                      (this.state.showLobby && this.state.lobby !== undefined) &&
+                      <Lobby api={this.api} lobby={this.state.lobby}/>
+                    }
+                    {
+                      this.state.shownError !== null &&
+                      <Dialog
+                          title={"Error"}
+                          message={"Connecting to lobby failed: " + this.state.shownError}
+                          buttons={[<button onClick={() => this.setState({shownError: null})}>Ok</button>]} />
+                      }
                 </div>
 
         );
@@ -45,12 +64,14 @@ export default class Game extends React.Component<Props, State> {
     //successfully connected to the server
     this.api.on("ready", () => {
       this.setState({showLobbyList: true, showLobby: false});
+      //DEBUG START
       let clr: CreateLobbyRequest = {
         name: "Coolio Lobby",
         hidden: false,
         playerName: "Mr Coolio"
       };
       this.api.sendMessage("create_lobby", clr);
+      //DEBUG END
     });
 
     //an error occurred during the connection (but still connected)
@@ -63,5 +84,27 @@ export default class Game extends React.Component<Props, State> {
       console.log("closed");
       this.setState({showLobbyList: false, showLobby: false});
     });
+  }
+
+  private joinLobby(id: string, specate: boolean, name?: string) {
+      let request: JoinLobbyRequest = {
+        id: id,
+        playerName: name,
+        spectate: specate
+      };
+    this.api.sendMessageCall("join_lobby", (_response => {
+      let response = _response as JoinLobbyResponse;
+      if (response.success && response.lobby !== undefined) {
+        this.setState({
+          showLobbyList: false,
+          showLobby: true,
+          lobby: response.lobby
+        });
+      } else if (response.reason !== undefined) {
+        this.setState({
+          shownError: response.reason
+        })
+      }
+    }), request);
   }
 }
