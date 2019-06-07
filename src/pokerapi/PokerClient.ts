@@ -29,14 +29,13 @@ export class PokerClient extends EventEmitter {
       this.emit(pokerMessage.command, pokerMessage.data);
     };
 
-    this.wsClient.onerror = (event) => {
-      this.emit("error", event);
-    };
-
     this.wsClient.onclose = (event) => {
       this.emit("close");
       if (this.autoReconnect) {
-        setTimeout(() => this.wsClient = new WebSocket(this.address, "poker1"), 3000);
+        setTimeout(() => {
+          this.wsClient = new WebSocket(this.address, "poker1");
+          this.registerListeners();
+        }, 3000);
       }
     };
   }
@@ -48,6 +47,7 @@ export class PokerClient extends EventEmitter {
       data: message
     };
     this.wsClient.send(JSON.stringify(cm));
+    console.log(cm);
   }
 
   public sendMessageCall(command: ClientCommand | Command, callback: (message?: PokerMessage) => void, message?: PokerMessage) {
