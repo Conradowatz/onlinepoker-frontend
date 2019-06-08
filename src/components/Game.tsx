@@ -3,7 +3,7 @@ import '../styles/Playground.css';
 import LobbyList from "./LobbyList";
 import Lobby from "./Lobby";
 import {PokerClient} from "../pokerapi/PokerClient";
-import {CreateLobbyRequest, JoinLobbyRequest, JoinLobbyResponse, Lobby as ApiLobby} from '../pokerapi/messages/ApiObjects';
+import {CreateLobbyRequest, JoinLobbyRequest, JoinLobbyResponse, Lobby as ApiLobby, DisconnectEvent} from '../pokerapi/messages/ApiObjects';
 import Dialog from "./Dialog";
 
 interface State {
@@ -77,12 +77,25 @@ export default class Game extends React.Component<Props, State> {
     //an error occurred during the connection (but still connected)
     this.api.on("error", (error: Error) => {
       console.log(error);
+      this.setState({shownError: error.message});
     });
 
     //the connection got closed
     this.api.on("close", () => {
-      console.log("closed");
-      this.setState({showLobbyList: false, showLobby: false});
+      this.setState({
+        showLobbyList: false,
+        showLobby: false,
+        shownError: this.state.shownError ? this.state.shownError : "Lost connection to the Server."
+      });
+    });
+
+    //the server kicked us out
+    this.api.on("disconnect", (event: DisconnectEvent) => {
+      this.setState({
+        showLobbyList: false,
+        showLobby: false,
+        shownError: event.reason
+      });
     });
   }
 

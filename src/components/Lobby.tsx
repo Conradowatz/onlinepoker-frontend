@@ -4,10 +4,12 @@ import '../styles/NameInput.css';
 import {PokerClient} from "../pokerapi/PokerClient";
 import {Lobby as ApiLobby} from "../pokerapi/messages/ApiObjects";
 import Chat from "./Chat";
+import SettingsTab from "./SettingsTab";
 
 interface  State {
   lobby: ApiLobby,
-  spectate: boolean
+  spectate: boolean,
+  isGameStarted: boolean
 }
 
 interface Props {
@@ -20,17 +22,21 @@ export default class Lobby extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      lobby: this.props.lobby,
-      spectate: !(this.props.lobby.yourId in this.props.lobby.players)
+      lobby: props.lobby,
+      spectate: !(props.lobby.players.hasOwnProperty(props.lobby.yourId)),
+      isGameStarted: props.lobby.running
     }
   }
 
   render() {
     return (
         <div id={"lobbyContainer"}>
-          <p>Lobby!</p>
+
+          {!this.state.isGameStarted && <SettingsTab api={this.props.api} lobby={this.state.lobby}/>}
           <Chat api={this.props.api} myId={this.state.lobby.yourId}/>
         </div>
     )
   }
+  //<PlayerList />
+  //           {this.state.isGameStarted && <Playground />}
 }
