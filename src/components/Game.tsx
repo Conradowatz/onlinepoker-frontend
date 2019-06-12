@@ -1,5 +1,4 @@
 import * as React from 'react';
-import '../styles/Playground.css';
 import LobbyList from "./LobbyList";
 import Lobby from "./Lobby";
 import {PokerClient} from "../pokerapi/PokerClient";
