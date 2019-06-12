@@ -31,18 +31,6 @@ input {
     flex-direction: row;
     justify-content: space-evenly;
 }
-button {
-    color: #ecf0f1;
-    border: 2px solid #34495e;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 100%;
-    background-color: #34495e;
-}
-button:hover {
-    background-color: #2c3e50;
-    cursor: pointer;
-}
 .nameInput-enter {
     opacity: 0;
 }

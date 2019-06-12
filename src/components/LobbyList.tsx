@@ -2,6 +2,8 @@ import * as React from 'react';
 import {PokerClient} from "../pokerapi/PokerClient";
 import {LobbyPreview, GetLobbiesResponse} from '../pokerapi/messages/ApiObjects';
 import JoinLobbyDialog from "./JoinLobbyDialog";
+import "../styles/LobbyList.css"
+import refreshImg from "../assets/refresh.png"
 
 interface  State {
   showJoinLobbyDialog: boolean,
@@ -33,12 +35,12 @@ export default class LobbyList extends React.Component<Props, State> {
   render() {
     return (
         <div id={"lobbyListContainer"}>
-          <div id={"ll-buttonRow"}>
+          <div className={"buttonRow"}>
             <button>Create Lobby</button>
             <button>Join hidden Lobby</button>
-            <button onClick={(e) => this.refreshLobbies()}><img id={"refresh"} alt={"Refresh"}/></button>
+            <button id={"refresh"} onClick={(e) => this.refreshLobbies()}><img src={refreshImg} id={"refresh"} alt={"Refresh"}/></button>
           </div>
-          <table id={"lobbyListTable"}>
+          <table className={"table"}>
             <thead>
             <tr>
               <th>Name</th>

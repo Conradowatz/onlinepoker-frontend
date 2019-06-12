@@ -6,33 +6,57 @@
     --dark-brown: #4F2A13;
     --grey: #1C2321;
     --magenta: #A93B52;
+    --magenta-dark: #7b2b3c;
     --blue: #3D5670;
     --white: #E4DDD3;
     --black: #1A1518;
 }
 
 body {
-    background: var(--grey);
-}
-
-#title {
-    color: var(--white);
-    font-size: 2em;
-    padding: 20px;
-    text-align: center;
+    background: white;
 }
 
 #app {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+#title {
+    color: var(--black);
+    font-size: 2em;
+    padding: 20px;
+    text-align: center;
 }
 
 #game {
     margin: 0 30px 30px 30px;
-    background-color: var(--white);
-    border-radius: 10px;
-    border: 8px solid var(--black);
     position: relative;
     flex-grow: 100;
+    padding: 20px;
+    width: 100%;
+    max-width: 1280px;
+}
+
+@media (max-width: 600px) {
+    #title {
+        display: none;
+    }
+
+    #game {
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+    }
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1em;
+}
+button:hover {
+    cursor: pointer;
 }
