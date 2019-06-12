@@ -47,9 +47,9 @@ export interface Lobby extends PokerMessage {
   joinable: boolean;
   settings: Settings;
   availableGamemodes: string[];
-  players: Map<number, Player>; //key=Player.id
+  players: Record<string | number, Player>; //key=Player.id
   leader: number; //Player.id
-  youAreLeader: boolean;
+  yourId: number;
 }
 
 export interface Card extends PokerMessage {
@@ -61,7 +61,7 @@ export interface THSettings extends Settings {
   startMoney: number;
   turnTime: number;
   useSidepots: boolean;
-  blinds: Map<number, number>;
+  blinds: Record<string | number, number>;
 }
 
 export interface THPlayer extends Player {

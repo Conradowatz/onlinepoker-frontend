@@ -1,10 +1,11 @@
 import React from 'react';
 import Game from './components/Game';
+import './styles/App.css';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <div id={'title'}>Texas Hold'em Poker</div>
+    <div id={"app"}>
+      <div id={"title"}>Texas Hold'em Poker</div>
       <Game/>
     </div>
   );

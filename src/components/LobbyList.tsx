@@ -1,39 +1,90 @@
 import * as React from 'react';
-
-import '../styles/NameInput.css';
 import {PokerClient} from "../pokerapi/PokerClient";
-import {FormEvent} from "react";
+import {LobbyPreview, GetLobbiesResponse} from '../pokerapi/messages/ApiObjects';
+import JoinLobbyDialog from "./JoinLobbyDialog";
 
 interface  State {
-    showNameInput: boolean
+  showJoinLobbyDialog: boolean,
+  showCreateLobbyDialog: boolean,
+  lobbies: LobbyPreview[]
 }
 
 interface Props {
-    api: PokerClient
+  api: PokerClient,
+  onJoin: (id: string, name: string) => void,
+  onSpectate: (id: string) => void
 }
 
 export default class LobbyList extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            showNameInput: false
-        }
-    }
-    render() {
-        return (
-            <div id={'inputContainer'}>
-                <div id={'description'}>Beitrittscode: </div>
-                <input onSubmit={(event) => this.handleLobbyChosen(event)} type="text"/>
-                <div id={"lobbyButtons"}>
-                    <button>Lobby erstellen</button>
-                    <button>Lobby beitreten</button>
-                </div>
-            </div>
-        )
-    }
 
-    handleLobbyChosen(event: FormEvent<HTMLInputElement>) {
-        console.log("enter");
-        console.log(event);
+  private selectedLobby?: string;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showJoinLobbyDialog: false,
+      showCreateLobbyDialog: false,
+      lobbies: []
+    };
+
+    this.refreshLobbies();
+  }
+
+  render() {
+    return (
+        <div id={"lobbyListContainer"}>
+          <div id={"ll-buttonRow"}>
+            <button>Create Lobby</button>
+            <button>Join hidden Lobby</button>
+            <button onClick={(e) => this.refreshLobbies()}><img id={"refresh"} alt={"Refresh"}/></button>
+          </div>
+          <table id={"lobbyListTable"}>
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Game Mode</th>
+              <th>Running</th>
+              <th>Players</th>
+            </tr>
+            </thead>
+            <tbody>
+            {this.state.lobbies.map((lobby) =>
+                <tr key={lobby.id}>
+                  <td>{lobby.name}</td>
+                  <td>{lobby.gameMode}</td>
+                  <td>{lobby.running ? "Yes" : "No"}</td>
+                  <td>{`${lobby.currentPlayers}/${lobby.maxPlayers}`}</td>
+                  <td>
+                    {lobby.joinable && <button onClick={(e) => this.showJoinLobby(lobby.id)}>Join</button>}
+                    <button onClick={(e) => this.props.onSpectate(lobby.id)}>Spectate</button>
+                  </td>
+                </tr>
+            )}
+            </tbody>
+          </table>
+          {this.state.showJoinLobbyDialog &&
+            <JoinLobbyDialog onJoin={(name) => this.joinLobby(name)} onCancel={() => this.setState({showJoinLobbyDialog: false})}/>
+          }
+        </div>
+    )
+  }
+
+  private refreshLobbies() {
+    this.props.api.sendMessageCall("get_lobbies", (_message) => {
+      let message = _message as GetLobbiesResponse;
+      this.setState({lobbies: message.lobbies});
+    });
+  }
+
+  private showJoinLobby(id: string) {
+    this.selectedLobby = id;
+    this.setState({showJoinLobbyDialog: true});
+  }
+
+  private joinLobby(name: string) {
+    this.setState({showJoinLobbyDialog: false});
+    if (this.selectedLobby !== undefined) {
+      this.props.onJoin(this.selectedLobby, name);
     }
+  }
 }
