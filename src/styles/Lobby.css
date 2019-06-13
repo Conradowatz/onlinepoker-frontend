@@ -1,0 +1,23 @@
+#lobbyContainer {
+    height: auto;
+    display: grid;
+    grid-template-rows: 50px auto;
+    grid-template-columns: 200px auto 200px;
+    grid-template-areas:
+        "header header header"
+        "players content chat";
+    justify-items: stretch;
+    align-items: stretch;
+    grid-column-gap: 20px;
+    border: 5px solid black;
+}
+
+#chatContainer {
+    grid-area: chat;
+}
+
+#content {
+    grid-area: content;
+    overflow: scroll;
+}
+

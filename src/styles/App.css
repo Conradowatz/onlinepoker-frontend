@@ -32,7 +32,6 @@ body {
 
 #game {
     margin: 0 30px 30px 30px;
-    position: relative;
     flex-grow: 100;
     padding: 20px;
     width: 100%;
@@ -59,4 +58,15 @@ button {
 }
 button:hover {
     cursor: pointer;
+}
+
+input {
+    color: #34495e;
+    border: 2px solid #34495e;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+    font-size: 150%;
+    background-color: #ecf0f1;
+    text-align: center;
 }

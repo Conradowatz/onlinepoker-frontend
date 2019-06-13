@@ -50,8 +50,8 @@ export default class THSettingsTab extends React.Component<Props, State> {
               <tbody>
                 {Object.getOwnPropertyNames(this.props.settings.blinds).map((round) =>
                   <tr key={round}>
-                    <td>{round}</td>
-                    <td>{this.props.settings.blinds[round]}</td>
+                    <td><input value={round}/></td>
+                    <td><input value={this.props.settings.blinds[round]}/></td>
                   </tr>
                 )}
               </tbody>

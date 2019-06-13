@@ -3,6 +3,7 @@ import {PokerClient} from "../pokerapi/PokerClient";
 import {LobbyPreview, GetLobbiesResponse} from '../pokerapi/messages/ApiObjects';
 import JoinLobbyDialog from "./JoinLobbyDialog";
 import "../styles/LobbyList.css"
+import "../styles/Dialog.css"
 import refreshImg from "../assets/refresh.png"
 
 interface  State {

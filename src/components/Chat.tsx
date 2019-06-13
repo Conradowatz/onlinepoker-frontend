@@ -1,6 +1,7 @@
 import React from "react";
 import {PokerClient} from "../pokerapi/PokerClient";
 import {Player, ChatIn, ChatOut} from "../pokerapi/messages/ApiObjects";
+import "../styles/Chat.css"
 
 interface ChatMessage {
   sender: Player,
@@ -32,8 +33,8 @@ export default class Chat extends React.Component<Props, State> {
 
   render() {
     return (
-        <div id={"chat-container"}>
-          <div id={"chat-messages"}>
+        <div id={"chatContainer"}>
+          <div id={"chatMessages"}>
             {this.state.messages.map((message, index) =>
               <div className={"message"} key={index}>
                 <p className={"message-from"}>{message.sender.name}</p>
@@ -41,7 +42,7 @@ export default class Chat extends React.Component<Props, State> {
               </div>
             )}
           </div>
-          <div id={"chat-input-container"}>
+          <div id={"chatInputContainer"}>
             <input
                 value={this.state.currentMessage} onChange={(e) => this.setState({currentMessage: e.target.value})}
                 onKeyPress={(e) => {if (e.key === "Enter") this.sendMessage()}}
