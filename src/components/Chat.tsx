@@ -2,6 +2,7 @@ import React from "react";
 import {PokerClient} from "../pokerapi/PokerClient";
 import {Player, ChatIn, ChatOut} from "../pokerapi/messages/ApiObjects";
 import "../styles/Chat.css"
+import Scrollbars from "react-custom-scrollbars"
 
 interface ChatMessage {
   sender: Player,
@@ -21,6 +22,8 @@ interface Props {
 
 export default class Chat extends React.Component<Props, State> {
 
+  private chatContainer:Scrollbars|null;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -28,20 +31,21 @@ export default class Chat extends React.Component<Props, State> {
       currentMessage: ""
     };
 
+    this.chatContainer = null;
     this.registerListeners();
   }
 
   render() {
     return (
         <div id={"chatContainer"}>
-          <div id={"chatMessages"}>
+          <Scrollbars id={"chatMessages"} autoHide ref={c => (this.chatContainer = c)}>
             {this.state.messages.map((message, index) =>
               <div className={"message"} key={index}>
                 <span className={"message-from"}>{message.sender.name}: </span>
                 <span className={"message-content"}>{message.message}</span>
               </div>
             )}
-          </div>
+          </Scrollbars>
           <div id={"chatInputContainer"}>
             <input
                 value={this.state.currentMessage} onChange={(e) => this.setState({currentMessage: e.target.value})}
@@ -55,8 +59,9 @@ export default class Chat extends React.Component<Props, State> {
 
   componentDidUpdate(): void {
     // scroll down
-    let elem = document.getElementById('chatMessages');
-    elem!.scrollTop = elem!.scrollHeight;
+    if (this.chatContainer !== null) {
+      this.chatContainer.scrollToBottom();
+    }
   }
 
   private registerListeners() {

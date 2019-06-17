@@ -31,7 +31,6 @@
     background: var(--white);
     padding: 5px;
     height: calc(100% - 65px);
-    overflow-y: scroll;
 }
 
 #lobbyList table {

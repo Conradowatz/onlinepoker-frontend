@@ -5,8 +5,9 @@ import JoinLobbyDialog from "./JoinLobbyDialog";
 import "../styles/LobbyList.css"
 import "../styles/Dialog.css"
 import refreshImg from "../assets/refresh.png"
+import Scrollbars from "react-custom-scrollbars"
 
-interface  State {
+interface State {
   showJoinLobbyDialog: boolean,
   showCreateLobbyDialog: boolean,
   lobbies: LobbyPreview[]
@@ -41,7 +42,7 @@ export default class LobbyList extends React.Component<Props, State> {
           <button>Join hidden Lobby</button>
           <button id={"refresh"} onClick={(e) => this.refreshLobbies()}><img src={refreshImg} id={"refresh"} alt={"Refresh"}/></button>
         </div>
-        <div id={"lobbyList"}>
+        <Scrollbars id={"lobbyList"}>
           <table className={"table"}>
             <thead>
             <tr>
@@ -66,7 +67,7 @@ export default class LobbyList extends React.Component<Props, State> {
             )}
             </tbody>
           </table>
-        </div>
+        </Scrollbars>
         {this.state.showJoinLobbyDialog &&
         <JoinLobbyDialog onJoin={(name) => this.joinLobby(name)} onCancel={() => this.setState({showJoinLobbyDialog: false})}/>
         }
