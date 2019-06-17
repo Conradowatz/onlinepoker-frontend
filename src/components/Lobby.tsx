@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import '../styles/NameInput.css';
+import '../styles/Lobby.css';
 import {PokerClient} from "../pokerapi/PokerClient";
 import {Lobby as ApiLobby} from "../pokerapi/messages/ApiObjects";
 import Chat from "./Chat";
@@ -31,8 +31,9 @@ export default class Lobby extends React.Component<Props, State> {
   render() {
     return (
         <div id={"lobbyContainer"}>
-
-          {!this.state.isGameStarted && <SettingsTab api={this.props.api} lobby={this.state.lobby}/>}
+          <div id={"content"}>
+            {!this.state.isGameStarted && <SettingsTab api={this.props.api} lobby={this.state.lobby}/>}
+          </div>
           <Chat api={this.props.api} myId={this.state.lobby.yourId}/>
         </div>
     )

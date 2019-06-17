@@ -1,0 +1,47 @@
+#lobbyListContainer {
+
+}
+
+#lobbyListContainer .buttonRow {
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    background: var(--grey);
+}
+
+#lobbyListContainer button {
+    background: var(--magenta);
+    color: var(--white);
+}
+
+#lobbyListContainer button:hover {
+    background: var(--magenta-dark);
+}
+
+#lobbyListContainer .buttonRow button {
+    margin-right: 7px;
+    height: 35px;
+}
+
+#lobbyListContainer .buttonRow img {
+    width: auto;
+    height: 100%;
+}
+
+#lobbyListContainer .buttonRow #refresh {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#lobbyListContainer .table {
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    background: var(--grey);
+    color: white
+}
+
+#lobbyListContainer .table thead {
+
+}

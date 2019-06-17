@@ -31,7 +31,7 @@ export default class SettingsTab extends React.Component<Props, State> {
 
   render() {
     return (
-        <div id={"settings-container"}>
+        <div id={"settingsContainer"}>
           {
             this.state.settings.gameMode === "texasholdem" &&
             <THSettingsTab

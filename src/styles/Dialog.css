@@ -1,0 +1,33 @@
+.dialog {
+    position: absolute;
+    width: 400px;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    transition: all .3s ease;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border: 5px solid var(--grey);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* title */
+.dialog h2 {
+    font-size: 2em;
+}
+/* message */
+.dialog p {
+
+}
+
+.dialog>* {
+    margin-bottom: 10px;
+}
+
+#description {
+    color: #34495e;
+    font-size: 150%;
+    margin-bottom: 10px;
+}

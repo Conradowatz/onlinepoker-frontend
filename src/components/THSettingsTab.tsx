@@ -40,24 +40,10 @@ export default class THSettingsTab extends React.Component<Props, State> {
           </div>
           <div className={"settings-row"}>
             <p className={"setting-title"}>Blinds</p>
-            <table>
-              <thead>
-                <tr>
-                  <th>Round</th>
-                  <th>Small Blind</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.getOwnPropertyNames(this.props.settings.blinds).map((round) =>
-                  <tr key={round}>
-                    <td>{round}</td>
-                    <td>{this.props.settings.blinds[round]}</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+            <input type={"range"} min={0} max={10} value={this.props.settings.blindsRate} disabled={!this.props.canEdit} onChange={(e) => {this.changedSettings.blindsRate=Number.parseInt(e.target.value); this.props.onChange(this.changedSettings);}}/>
+            <input type={"checkbox"} checked={this.props.settings.blindsTimeInsteadOfHands} disabled={!this.props.canEdit} onChange={(e) => {this.changedSettings.blindsTimeInsteadOfHands = e.target.checked; this.props.onChange(this.changedSettings);}}/>
             </div>
         </div>
-    ); //TODO make blinds adjustable
+    );
   }
 }

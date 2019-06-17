@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import '../styles/NameInput.css';
+import '../styles/Dialog.css';
 import Dialog from "./Dialog";
 
 interface  State {
