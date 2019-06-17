@@ -61,7 +61,8 @@ export interface THSettings extends Settings {
   startMoney: number;
   turnTime: number;
   useSidepots: boolean;
-  blinds: Record<string | number, number>;
+  blindsTimeInsteadOfHands: boolean,
+  blindsRate: number;
 }
 
 export interface THPlayer extends Player {
