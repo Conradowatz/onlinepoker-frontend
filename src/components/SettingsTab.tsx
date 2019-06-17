@@ -40,6 +40,7 @@ export default class SettingsTab extends React.Component<Props, State> {
                 canEdit={this.state.canEdit}
             />
           }
+          <button disabled={!this.state.canEdit} onClick={() => this.saveSettings()}>Save</button>
         </div>
     );
   }
@@ -47,11 +48,25 @@ export default class SettingsTab extends React.Component<Props, State> {
   private registerListeners() {
 
     this.props.api.on("lobby_update", (newLobby: Lobby) => {
-      this.setState({
-        settings: newLobby.settings,
-        somethingChanged: newLobby.settings !== this.state.changedSettings,
-        canEdit: newLobby.yourId === newLobby.leader
-      });
+      let canEdit = newLobby.yourId === newLobby.leader;
+      if (canEdit) {
+        this.setState({
+          settings: newLobby.settings,
+          somethingChanged: newLobby.settings !== this.state.changedSettings,
+          canEdit: true
+        });
+      } else {
+        this.setState({
+          settings: newLobby.settings,
+          changedSettings: newLobby.settings,
+          somethingChanged: false,
+          canEdit: false
+        })
+      }
     });
+  }
+
+  private saveSettings() {
+    this.props.api.sendMessage("change_settings", this.state.changedSettings);
   }
 }

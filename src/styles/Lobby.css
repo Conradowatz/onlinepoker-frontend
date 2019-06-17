@@ -19,6 +19,10 @@
 
 }
 
+#lobbyContainer .buttonRow {
+    grid-area: header;
+}
+
 #chatContainer {
     grid-area: chat;
     overflow-y: auto;
@@ -28,5 +32,9 @@
     grid-area: content;
     overflow-y: auto;
     flex-grow: 100;
+}
+
+#playerList {
+    grid-area: players;
 }
 

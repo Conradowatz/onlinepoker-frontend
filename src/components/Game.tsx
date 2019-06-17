@@ -44,7 +44,7 @@ export default class Game extends React.Component<Props, State> {
                     }
                     {
                       (this.state.showLobby && this.state.lobby !== undefined) &&
-                      <Lobby api={this.api} lobby={this.state.lobby}/>
+                      <Lobby api={this.api} lobby={this.state.lobby} onLeave={() => this.leftLobby()}/>
                     }
                     {
                       this.state.shownError !== null &&
@@ -118,5 +118,13 @@ export default class Game extends React.Component<Props, State> {
         })
       }
     }), request);
+  }
+
+  private leftLobby() {
+    this.api.sendMessage("leave_lobby");
+    this.setState({
+      showLobby: false,
+      showLobbyList: true
+    })
   }
 }
