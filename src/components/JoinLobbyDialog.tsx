@@ -37,8 +37,8 @@ export default class JoinLobbyDialog extends React.Component<Props, State> {
                     </div>
                 }
                 buttons={[
-                    <button onClick={this.props.onCancel} key={0}>Cancel</button>,
-                    <button disabled={!this.state.isNameOk} onClick={() => this.props.onJoin(this.state.name.trim())} key={1}>Join</button>
+                    <button disabled={!this.state.isNameOk} onClick={() => this.props.onJoin(this.state.name.trim())} key={1}>Join</button>,
+                    <button onClick={this.props.onCancel} key={0}>Cancel</button>
                 ]}
             />
         )

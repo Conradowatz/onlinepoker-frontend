@@ -1,29 +1,40 @@
 #lobbyContainer {
-    display: flex;
-    flex-direction: row;
     height: 100%;
-    /*height: auto;
     display: grid;
-    grid-template-rows: 50px auto;
-    grid-template-columns: 200px auto 200px;
+    grid-template-rows: 55px auto;
+    grid-template-columns: 200px auto 400px;
     grid-template-areas:
         "header header header"
         "players content chat";
     justify-items: stretch;
     align-items: stretch;
-    grid-column-gap: 20px;
-    border: 5px solid black;*/
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
 }
 
-#players-container {
-
+#playerList {
+    grid-area: players;
+    background-color: var(--white);
+    border-radius: 5px;
+    padding: 10px;
 }
 
 #lobbyContainer .buttonRow {
     grid-area: header;
+    background: var(--white);
+    border-radius: 5px;
+    display: flex;
+    padding: 10px;
+}
+
+#lobbyContainer .buttonRow button {
+    height: 35px;
+    margin-right: 7px;
 }
 
 #chatContainer {
+    background: var(--white);
+    border-radius: 5px;
     grid-area: chat;
     overflow-y: auto;
 }
@@ -31,10 +42,8 @@
 #content {
     grid-area: content;
     overflow-y: auto;
-    flex-grow: 100;
-}
-
-#playerList {
-    grid-area: players;
+    background: var(--white);
+    border-radius: 5px;
+    padding: 10px;
 }
 

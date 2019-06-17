@@ -35,12 +35,13 @@ export default class LobbyList extends React.Component<Props, State> {
 
   render() {
     return (
-        <div id={"lobbyListContainer"}>
-          <div className={"buttonRow"}>
-            <button>Create Lobby</button>
-            <button>Join hidden Lobby</button>
-            <button id={"refresh"} onClick={(e) => this.refreshLobbies()}><img src={refreshImg} id={"refresh"} alt={"Refresh"}/></button>
-          </div>
+      <div id={"lobbyListContainer"}>
+        <div className={"buttonRow"}>
+          <button>Create Lobby</button>
+          <button>Join hidden Lobby</button>
+          <button id={"refresh"} onClick={(e) => this.refreshLobbies()}><img src={refreshImg} id={"refresh"} alt={"Refresh"}/></button>
+        </div>
+        <div id={"lobbyList"}>
           <table className={"table"}>
             <thead>
             <tr>
@@ -52,23 +53,24 @@ export default class LobbyList extends React.Component<Props, State> {
             </thead>
             <tbody>
             {this.state.lobbies.map((lobby) =>
-                <tr key={lobby.id}>
-                  <td>{lobby.name}</td>
-                  <td>{lobby.gameMode}</td>
-                  <td>{lobby.running ? "Yes" : "No"}</td>
-                  <td>{`${lobby.currentPlayers}/${lobby.maxPlayers}`}</td>
-                  <td>
-                    {lobby.joinable && <button onClick={(e) => this.showJoinLobby(lobby.id)}>Join</button>}
-                    <button onClick={(e) => this.props.onSpectate(lobby.id)}>Spectate</button>
-                  </td>
-                </tr>
+              <tr key={lobby.id}>
+                <td>{lobby.name}</td>
+                <td>{lobby.gameMode}</td>
+                <td>{lobby.running ? "Yes" : "No"}</td>
+                <td>{`${lobby.currentPlayers}/${lobby.maxPlayers}`}</td>
+                <td>
+                  {lobby.joinable && <button onClick={(e) => this.showJoinLobby(lobby.id)}>Join</button>}
+                  <button onClick={(e) => this.props.onSpectate(lobby.id)}>Spectate</button>
+                </td>
+              </tr>
             )}
             </tbody>
           </table>
-          {this.state.showJoinLobbyDialog &&
-            <JoinLobbyDialog onJoin={(name) => this.joinLobby(name)} onCancel={() => this.setState({showJoinLobbyDialog: false})}/>
-          }
         </div>
+        {this.state.showJoinLobbyDialog &&
+        <JoinLobbyDialog onJoin={(name) => this.joinLobby(name)} onCancel={() => this.setState({showJoinLobbyDialog: false})}/>
+        }
+      </div>
     )
   }
 

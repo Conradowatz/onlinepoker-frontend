@@ -1,6 +1,7 @@
 import React from 'react';
 import Game from './components/Game';
 import './styles/App.css';
+import "./styles/InputObjects.css";
 
 const App: React.FC = () => {
   return (

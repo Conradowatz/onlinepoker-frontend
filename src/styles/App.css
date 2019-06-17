@@ -8,7 +8,7 @@
     --magenta: #A93B52;
     --magenta-dark: #7b2b3c;
     --blue: #3D5670;
-    --white: #E4DDD3;
+    --white: #ffffff;
     --black: #1A1518;
 }
 
@@ -17,27 +17,29 @@
 }
 
 body {
-    background: white;
+    background: #271641;
 }
 
 #app {
     height: 100vh;
-    /*align-items: center;*/
+    overflow: hidden;
 }
 
 #title {
-    color: var(--black);
+    color: white;
     font-size: 2em;
     text-align: center;
     height: 50px;
+    margin-top: 10px;
 }
 
 #game {
     padding: 20px;
-    height: calc(100% - 50px);
+    height: calc(100% - 60px);
+    max-width: 1280px;
+    margin:auto;
 }
 
-/*
 @media (max-width: 600px) {
     #title {
         display: none;
@@ -46,27 +48,7 @@ body {
     #game {
         margin: 0;
         border: 0;
+        height: 100%;
         border-radius: 0;
     }
-}*/
-
-button {
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 1em;
-}
-button:hover {
-    cursor: pointer;
-}
-
-input {
-    color: #34495e;
-    border: 2px solid #34495e;
-    border-radius: 5px;
-    padding: 5px;
-    width: 100%;
-    font-size: 150%;
-    background-color: #ecf0f1;
-    text-align: center;
 }

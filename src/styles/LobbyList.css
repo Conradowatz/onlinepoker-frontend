@@ -1,21 +1,13 @@
 #lobbyListContainer {
-
+    height: 100%;
 }
 
 #lobbyListContainer .buttonRow {
     padding: 10px;
     border-radius: 5px;
     display: flex;
-    background: var(--grey);
-}
-
-#lobbyListContainer button {
-    background: var(--magenta);
-    color: var(--white);
-}
-
-#lobbyListContainer button:hover {
-    background: var(--magenta-dark);
+    background: var(--white);
+    height: 55px;
 }
 
 #lobbyListContainer .buttonRow button {
@@ -33,13 +25,39 @@
     margin-right: 0;
 }
 
-#lobbyListContainer .table {
+#lobbyList {
     margin-top: 10px;
     border-radius: 5px;
+    background: var(--white);
+    padding: 5px;
+    height: calc(100% - 65px);
+    overflow-y: scroll;
+}
+
+#lobbyList table {
     width: 100%;
     padding: 10px;
-    background: var(--grey);
-    color: white
+    border-collapse: collapse;
+}
+
+#lobbyList tr {
+    border: 1px solid black;
+}
+
+#lobbyList tr:nth-child(even) {
+    background: #dfc9c9;
+}
+
+#lobbyList th {
+    padding: 10px;
+}
+
+#lobbyList td {
+    padding: 5px;
+}
+
+#lobbyList button {
+    margin-right: 5px;
 }
 
 #lobbyListContainer .table thead {

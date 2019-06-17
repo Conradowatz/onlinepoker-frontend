@@ -11,6 +11,7 @@
     border: 5px solid var(--grey);
     border-radius: 8px;
     padding: 20px;
+    background: var(--white);
 }
 
 /* title */
