@@ -1,5 +1,8 @@
 #lobbyContainer {
-    height: auto;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    /*height: auto;
     display: grid;
     grid-template-rows: 50px auto;
     grid-template-columns: 200px auto 200px;
@@ -9,15 +12,21 @@
     justify-items: stretch;
     align-items: stretch;
     grid-column-gap: 20px;
-    border: 5px solid black;
+    border: 5px solid black;*/
+}
+
+#players-container {
+
 }
 
 #chatContainer {
     grid-area: chat;
+    overflow-y: auto;
 }
 
 #content {
     grid-area: content;
-    overflow: scroll;
+    overflow-y: auto;
+    flex-grow: 100;
 }
 

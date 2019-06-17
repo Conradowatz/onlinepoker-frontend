@@ -37,8 +37,8 @@ export default class Chat extends React.Component<Props, State> {
           <div id={"chatMessages"}>
             {this.state.messages.map((message, index) =>
               <div className={"message"} key={index}>
-                <p className={"message-from"}>{message.sender.name}</p>
-                <p className={"message-content"}>{message.message}</p>
+                <span className={"message-from"}>{message.sender.name}: </span>
+                <span className={"message-content"}>{message.message}</span>
               </div>
             )}
           </div>
@@ -51,6 +51,12 @@ export default class Chat extends React.Component<Props, State> {
           </div>
         </div>
     );
+  }
+
+  componentDidUpdate(): void {
+    // scroll down
+    let elem = document.getElementById('chatMessages');
+    elem!.scrollTop = elem!.scrollHeight;
   }
 
   private registerListeners() {
