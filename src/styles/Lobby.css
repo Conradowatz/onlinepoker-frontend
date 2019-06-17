@@ -12,6 +12,10 @@
     border: 5px solid black;
 }
 
+#lobbyContainer .buttonRow {
+    grid-area: header;
+}
+
 #chatContainer {
     grid-area: chat;
 }
@@ -19,5 +23,9 @@
 #content {
     grid-area: content;
     overflow: scroll;
+}
+
+#playerList {
+    grid-area: players;
 }
 

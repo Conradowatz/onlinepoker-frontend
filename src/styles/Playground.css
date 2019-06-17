@@ -1,0 +1,7 @@
+#playground {
+    padding: 10px;
+    border: 20px solid var(--dark-brown);
+    border-radius: 200px;
+    background: var(--light-green);
+    height: 400px;
+}
