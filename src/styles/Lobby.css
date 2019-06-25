@@ -2,7 +2,7 @@
     height: 100%;
     display: grid;
     grid-template-rows: 55px auto;
-    grid-template-columns: 200px auto 400px;
+    grid-template-columns: 200px auto 300px;
     grid-template-areas:
         "header header header"
         "players content chat";
@@ -10,6 +10,12 @@
     align-items: stretch;
     grid-column-gap: 10px;
     grid-row-gap: 10px;
+}
+
+#lobbyContainer.playing {
+    grid-template-areas:
+        "content content chat"
+        "content content chat";
 }
 
 #playerList {
@@ -47,3 +53,13 @@
     padding: 10px;
 }
 
+@media (max-width: 600px) {
+    #lobbyContainer.playing {
+        grid-template-areas:
+            "content content content"
+            "content content content";
+    }
+    #chatContainer {
+        display: none !important;
+    }
+}

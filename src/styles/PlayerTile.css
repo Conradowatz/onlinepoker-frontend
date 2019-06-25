@@ -1,0 +1,17 @@
+.playerTile {
+  border: 1px solid #b8b8b8;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+
+.playerTile .name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.playerTile .id {
+  margin: 0 0 0 10px;
+  color: #868686;
+}

@@ -1,7 +1,27 @@
-#playground {
-    padding: 10px;
+#tableContainer {
+    padding: 50px;
+}
+
+#table {
     border: 20px solid var(--dark-brown);
     border-radius: 200px;
     background: var(--light-green);
     height: 400px;
+}
+
+#actionButtons {
+
+}
+
+#roundInfo {
+    position: absolute;
+}
+
+#roundInfo p {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+#actionButtons button {
+    margin-right: 5px;
 }

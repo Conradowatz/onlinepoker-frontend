@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import '../styles/Lobby.css';
 import {PokerClient} from "../pokerapi/PokerClient";
-import {Lobby as ApiLobby, THStartGame, Settings} from "../pokerapi/messages/ApiObjects";
+import {Lobby as ApiLobby, THStartGame} from "../pokerapi/messages/ApiObjects";
 import Chat from "./Chat";
 import SettingsTab from "./SettingsTab";
 import PlayerList from "./PlayerList";
@@ -36,20 +36,24 @@ export default class Lobby extends React.Component<Props, State> {
 
   render() {
     return (
-        <div id={"lobbyContainer"}>
+        <div id={"lobbyContainer"} className={this.state.isGameStarted ? "playing" : ""}>
+          {!this.state.isGameStarted &&
           <div className={"buttonRow"}>
-            <button id={"startGame"} disabled={this.state.lobby.leader!==this.state.lobby.yourId} onClick={() => this.startGame()}>Start Game</button>
+            <button id={"startGame"} disabled={this.state.lobby.leader !== this.state.lobby.yourId}
+                    onClick={() => this.startGame()}>Start Game
+            </button>
             <button id={"leaveLobby"} onClick={this.props.onLeave}>Leave Loby</button>
           </div>
+          }
           <div id={"content"}>
             {!this.state.isGameStarted && <SettingsTab api={this.props.api} lobby={this.state.lobby}/>}
             {
               this.state.isGameStarted && this.state.startEvent !== undefined &&
-              <Playground api={this.props.api} startEvent={this.state.startEvent}/>
+              <Playground api={this.props.api} startEvent={this.state.startEvent} leaveGame={this.props.onLeave}/>
             }
           </div>
           <Chat api={this.props.api} myId={this.state.lobby.yourId}/>
-          <PlayerList players={Object.values(this.state.lobby.players)}/>
+          {!this.state.isGameStarted && <PlayerList players={Object.values(this.state.lobby.players)}/>}
         </div>
     )
   }

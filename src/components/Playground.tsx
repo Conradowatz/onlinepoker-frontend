@@ -10,11 +10,13 @@ import {
   THYourTurn
 } from "../pokerapi/messages/ApiObjects";
 import {PokerClient} from "../pokerapi/PokerClient";
+import DisplayCard from "./DisplayCard";
 
 
 interface Props {
   startEvent: THStartGame,
-  api: PokerClient
+  api: PokerClient,
+  leaveGame: () => void
 }
 
 interface State {
@@ -27,7 +29,8 @@ interface State {
   smallBlind: number,
   bigBlind: number,
   smallBlindPlayer: number,
-  bigBlindPlayer: number
+  bigBlindPlayer: number,
+  options: string[]
 }
 
 export default class Playground extends React.Component<Props, State> {
@@ -45,7 +48,8 @@ export default class Playground extends React.Component<Props, State> {
       smallBlind: 0,
       bigBlind: 0,
       smallBlindPlayer: 0,
-      bigBlindPlayer: 0
+      bigBlindPlayer: 0,
+      options: []
     };
 
     this.registerListeners();
@@ -58,13 +62,27 @@ export default class Playground extends React.Component<Props, State> {
           <p className={"blinds"}>{this.state.smallBlind}/{this.state.bigBlind}</p>
           <p className={"hand"}>Hand: {this.state.hand}</p>
         </div>
+        <div id={"tableContainer"}>
+          <div id={"table"}>
+            <div id={"communityCards"}>
+              {this.state.communityCards.map((c, i) =>
+                  <DisplayCard hidden={false} key={i} value={c.value} color={c.color}/>
+              )}
+            </div>
+          </div>
+        </div>
         <div id={"actionButtons"}>
-          <button>Call</button>
-          <button>Fold</button>
-          <button>Check</button>
-          <button>Raise</button>
-          <button>All In</button>
+          <button disabled={!this.state.options.includes("call")}>Call</button>
+          <button disabled={!this.state.options.includes("fold")}>Fold</button>
+          <button disabled={!this.state.options.includes("check")}>Check</button>
+          <button disabled={!this.state.options.includes("raise")}>Raise</button>
+          <button disabled={!this.state.options.includes("allin")}>All In</button>
           <button>Give Up</button>
+        </div>
+        <div id={"myCards"}>
+          {this.state.myCards.map((c, i) =>
+              <DisplayCard hidden={false} value={c.value} color={c.color} key={i}/>
+          )}
         </div>
       </div>
     );
@@ -89,11 +107,15 @@ export default class Playground extends React.Component<Props, State> {
     });
 
     this.props.api.on("th_your_turn", (event: THYourTurn) => {
-
+      this.setState({
+        options: event.options
+      })
     });
 
     this.props.api.on("th_community_card", (event: THCommunityCard) => {
-
+      this.setState({
+        communityCards: event.communityCards
+      });
     });
 
     this.props.api.on("th_end_round", (event: THEndRound) => {

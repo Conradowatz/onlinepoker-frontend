@@ -1,0 +1,15 @@
+#settings-inner-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#settings-inner-container .setting-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+#settings-inner-container .setting-title {
+  font-weight: bold;
+  margin-right: 20px;
+}

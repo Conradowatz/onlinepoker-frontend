@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Player} from "../pokerapi/messages/ApiObjects";
+import "../styles/PlayerTile.css"
 
 interface Props {
   player: Player

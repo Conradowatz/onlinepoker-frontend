@@ -26,6 +26,7 @@ export class PokerClient extends EventEmitter {
     //pipe incoming messages trough
     this.wsClient.onmessage = (message) => {
       let pokerMessage = JSON.parse(message.data);
+      console.log(pokerMessage);
       this.emit(pokerMessage.command, pokerMessage.data);
     };
 
@@ -47,7 +48,6 @@ export class PokerClient extends EventEmitter {
       data: message
     };
     this.wsClient.send(JSON.stringify(cm));
-    console.log(cm);
   }
 
   public sendMessageCall(command: ClientCommand | Command, callback: (message?: PokerMessage) => void, message?: PokerMessage) {

@@ -7,6 +7,7 @@
     --grey: #1C2321;
     --magenta: #A93B52;
     --magenta-dark: #7b2b3c;
+    --magenta-disabled: #a6858c;
     --blue: #3D5670;
     --white: #ffffff;
     --black: #1A1518;
@@ -17,7 +18,7 @@
 }
 
 body {
-    background: #271641;
+    background: #1b1b22;
 }
 
 #app {

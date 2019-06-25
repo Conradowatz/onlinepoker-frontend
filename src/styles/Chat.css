@@ -1,8 +1,8 @@
 #chatContainer {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    max-width: 400px;
+    padding: 0 20px 20px;
+    max-width: 300px;
 }
 
 #chatMessages {
@@ -12,13 +12,16 @@
     flex-direction: column;
 }
 
+#chatMessages .message:first-child {
+    margin-top: 10px;
+}
+
 #chatMessages .message {
     bottom: 0;
-    -ms-word-break: break-all;
     word-break: break-all;
 }
 
-#chatMessages .message .message-from{
+#chatMessages .message .message-from {
     font-weight: bold;
 }
 
@@ -30,7 +33,7 @@
 
 #chatInputContainer input {
     text-align: left;
-    width: 100%;
+    max-width: 200px;
     margin-right: 5px;
 }
 

@@ -18,12 +18,18 @@ button:active {
     transform: translateY(2px);
 }
 
+button:disabled {
+    transform: none;
+    background: var(--magenta-disabled);
+    cursor: default;
+}
+
 input {
     color: #34495e;
     border: 2px solid #34495e;
     border-radius: 5px;
     padding: 5px;
-    font-size: 150%;
+    font-size: 120%;
     background-color: #ecf0f1;
     text-align: center;
 }

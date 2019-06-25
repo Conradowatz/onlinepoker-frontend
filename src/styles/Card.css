@@ -1,18 +1,26 @@
-.Card_card {
-    /*position: absolute;*/
-    /*perspective: 1000px;*/
-    left: 50%;
-    top: 50%;
-    /*transform: translateX(-50%) translateY(-50%);*/
+.cardContainer {
+
 }
 
 .Card_front {
     background-image: url('../assets/card_front_sprite.png');
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px;
 }
+
+.Card_front p {
+    font-size: 1.5em;
+    margin-right: 3px;
+    font-weight: bold;
+}
+
 .Card_back {
     background-image: url('../assets/card_back_sprite.png');
 }
-.Card_card, .Card_front, .Card_back {
+.cardContainer, .Card_front, .Card_back {
     width: 50px;
     height: 75px;
 }

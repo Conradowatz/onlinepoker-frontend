@@ -29,18 +29,17 @@
     margin-top: 10px;
     border-radius: 5px;
     background: var(--white);
-    padding: 5px;
-    height: calc(100% - 65px);
+    height: calc(100% - 65px) !important;
 }
 
 #lobbyList table {
-    width: 100%;
-    padding: 10px;
+    width: calc(100% - 10px);
+    margin: 5px;
     border-collapse: collapse;
 }
 
 #lobbyList tr {
-    border: 1px solid black;
+    border: 1px solid #aeaeae;
 }
 
 #lobbyList tr:nth-child(even) {
@@ -49,6 +48,7 @@
 
 #lobbyList th {
     padding: 10px;
+    text-align: start;
 }
 
 #lobbyList td {

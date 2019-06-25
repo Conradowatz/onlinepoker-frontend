@@ -2,6 +2,7 @@ import React from "react";
 import {Settings, Lobby, THSettings} from "../pokerapi/messages/ApiObjects";
 import {PokerClient} from "../pokerapi/PokerClient";
 import THSettingsTab from "./THSettingsTab";
+import "../styles/Settings.css"
 
 interface State {
   settings: Settings,

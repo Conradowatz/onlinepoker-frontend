@@ -46,10 +46,11 @@ export default class LobbyList extends React.Component<Props, State> {
           <table className={"table"}>
             <thead>
             <tr>
-              <th>Name</th>
-              <th>Game Mode</th>
-              <th>Running</th>
-              <th>Players</th>
+              <th>NAME</th>
+              <th>GAME MODE</th>
+              <th>RUNNING</th>
+              <th>PLAYERS</th>
+              <th/>
             </tr>
             </thead>
             <tbody>
