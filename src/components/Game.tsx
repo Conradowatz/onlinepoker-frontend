@@ -1,8 +1,9 @@
 import * as React from 'react';
 import LobbyList from "./LobbyList";
-import Lobby from "./Lobby";
+import LobbyComponent from "./LobbyComponent";
 import {PokerClient} from "../pokerapi/PokerClient";
-import {CreateLobbyRequest, JoinLobbyRequest, JoinLobbyResponse, Lobby as ApiLobby, DisconnectEvent} from '../pokerapi/messages/ApiObjects';
+import {CreateLobbyRequest, JoinLobbyRequest, JoinLobbyResponse, Lobby as ApiLobby, DisconnectEvent,
+  Lobby} from '../pokerapi/messages/ApiObjects';
 import Dialog from "./Dialog";
 
 interface State {
@@ -40,11 +41,12 @@ export default class Game extends React.Component<Props, State> {
                       <LobbyList
                           api={this.api}
                           onJoin={(id, name) => this.joinLobby(id, false, name)}
+                          onCreate={(pName, lName, hidden) => this.createLobby(pName, lName, hidden)}
                           onSpectate={(id) => this.joinLobby(id, true)}/>
                     }
                     {
                       (this.state.showLobby && this.state.lobby !== undefined) &&
-                      <Lobby api={this.api} lobby={this.state.lobby} onLeave={() => this.leftLobby()}/>
+                      <LobbyComponent api={this.api} lobby={this.state.lobby} onLeave={() => this.leftLobby()}/>
                     }
                     {
                       this.state.shownError !== null &&
@@ -126,5 +128,21 @@ export default class Game extends React.Component<Props, State> {
       showLobby: false,
       showLobbyList: true
     })
+  }
+
+  private createLobby(pName: string, lName: string, hidden: boolean) {
+    let request:CreateLobbyRequest = {
+      hidden: hidden,
+      name: lName,
+      playerName: pName
+    };
+    this.api.sendMessageCall("create_lobby", (_response) => {
+      let response = _response as Lobby;
+      this.setState({
+        showLobbyList: false,
+        showLobby: true,
+        lobby: response
+      });
+    }, request);
   }
 }

@@ -12,7 +12,7 @@ interface props {
   color: string
 }
 
-export default class DisplayCard extends React.Component<props> {
+export default class CardComponent extends React.Component<props> {
     render() {
         return (
             <div className={"cardContainer"}>

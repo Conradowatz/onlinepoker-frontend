@@ -21,7 +21,7 @@ interface Props {
   onLeave: () => void
 }
 
-export default class Lobby extends React.Component<Props, State> {
+export default class LobbyComponent extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -43,6 +43,7 @@ export default class Lobby extends React.Component<Props, State> {
                     onClick={() => this.startGame()}>Start Game
             </button>
             <button id={"leaveLobby"} onClick={this.props.onLeave}>Leave Loby</button>
+            <p className={"lobbyName"}>{this.state.lobby.name}</p>
           </div>
           }
           <div id={"content"}>

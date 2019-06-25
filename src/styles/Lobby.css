@@ -30,12 +30,20 @@
     background: var(--white);
     border-radius: 5px;
     display: flex;
+    align-items: center;
     padding: 10px;
 }
 
 #lobbyContainer .buttonRow button {
     height: 35px;
     margin-right: 7px;
+}
+
+#lobbyContainer .buttonRow p.lobbyName {
+    margin-left: auto;
+    margin-right: 5px;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 #chatContainer {

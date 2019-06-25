@@ -10,7 +10,7 @@ import {
   THYourTurn
 } from "../pokerapi/messages/ApiObjects";
 import {PokerClient} from "../pokerapi/PokerClient";
-import DisplayCard from "./DisplayCard";
+import CardComponent from "./CardComponent";
 
 
 interface Props {
@@ -66,7 +66,7 @@ export default class Playground extends React.Component<Props, State> {
           <div id={"table"}>
             <div id={"communityCards"}>
               {this.state.communityCards.map((c, i) =>
-                  <DisplayCard hidden={false} key={i} value={c.value} color={c.color}/>
+                  <CardComponent hidden={false} key={i} value={c.value} color={c.color}/>
               )}
             </div>
           </div>
@@ -81,7 +81,7 @@ export default class Playground extends React.Component<Props, State> {
         </div>
         <div id={"myCards"}>
           {this.state.myCards.map((c, i) =>
-              <DisplayCard hidden={false} value={c.value} color={c.color} key={i}/>
+              <CardComponent hidden={false} value={c.value} color={c.color} key={i}/>
           )}
         </div>
       </div>

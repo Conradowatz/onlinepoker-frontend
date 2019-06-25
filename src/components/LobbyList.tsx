@@ -1,11 +1,12 @@
 import * as React from 'react';
 import {PokerClient} from "../pokerapi/PokerClient";
-import {LobbyPreview, GetLobbiesResponse} from '../pokerapi/messages/ApiObjects';
+import {LobbyPreview, GetLobbiesResponse, CreateLobbyRequest, Lobby} from '../pokerapi/messages/ApiObjects';
 import JoinLobbyDialog from "./JoinLobbyDialog";
 import "../styles/LobbyList.css"
 import "../styles/Dialog.css"
 import refreshImg from "../assets/refresh.png"
 import Scrollbars from "react-custom-scrollbars"
+import CreateLobbyDialog from "./CreateLobbyDialog";
 
 interface State {
   showJoinLobbyDialog: boolean,
@@ -16,6 +17,7 @@ interface State {
 interface Props {
   api: PokerClient,
   onJoin: (id: string, name: string) => void,
+  onCreate: (pName: string, lName: string, hidden: boolean) => void,
   onSpectate: (id: string) => void
 }
 
@@ -38,8 +40,8 @@ export default class LobbyList extends React.Component<Props, State> {
     return (
       <div id={"lobbyListContainer"}>
         <div className={"buttonRow"}>
-          <button>Create Lobby</button>
-          <button>Join hidden Lobby</button>
+          <button onClick={() => this.setState({showCreateLobbyDialog: true})}>Create Lobby</button>
+          <button disabled>Join hidden Lobby</button>
           <button id={"refresh"} onClick={(e) => this.refreshLobbies()}><img src={refreshImg} id={"refresh"} alt={"Refresh"}/></button>
         </div>
         <Scrollbars id={"lobbyList"}>
@@ -70,7 +72,10 @@ export default class LobbyList extends React.Component<Props, State> {
           </table>
         </Scrollbars>
         {this.state.showJoinLobbyDialog &&
-        <JoinLobbyDialog onJoin={(name) => this.joinLobby(name)} onCancel={() => this.setState({showJoinLobbyDialog: false})}/>
+          <JoinLobbyDialog onJoin={(name) => this.joinLobby(name)} onCancel={() => this.setState({showJoinLobbyDialog: false})}/>
+        }
+        {this.state.showCreateLobbyDialog &&
+          <CreateLobbyDialog onCreate={(pName, lName, hidden) => this.props.onCreate(pName, lName, hidden)} onCancel={() => this.setState({showCreateLobbyDialog:false})}/>
         }
       </div>
     )
