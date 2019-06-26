@@ -5,7 +5,10 @@ import CardComponent from "./CardComponent";
 
 interface Props {
   player: THPlayer,
-  showCards: boolean
+  showCards: boolean,
+  isSmallBlind: boolean,
+  isBigBlind: boolean,
+  iActive: boolean
 }
 
 export default class THPlayerTile extends React.Component<Props> {
@@ -14,6 +17,7 @@ export default class THPlayerTile extends React.Component<Props> {
   private readonly cards_values: string[];
   private readonly cards_colors: string[];
   private readonly status: string;
+  private readonly blind: string;
 
   constructor(props: Props) {
     super(props);
@@ -26,17 +30,22 @@ export default class THPlayerTile extends React.Component<Props> {
       this.cards_colors = props.player.cards.map((c) => c.color);
       this.cards_values = props.player.cards.map((c) => c.value);
     }
-    this.status = "";
+    this.status = "waiting...";
     if (props.player.allIn) this.status = "All In";
     if (props.player.folded) this.status = "Folded";
+    console.log("I am bb: " + props.isBigBlind);
+    if (props.isSmallBlind) this.blind = "SB";
+    else if (props.isBigBlind) this.blind = "BB";
+    else this.blind = "XX";
   }
 
   render() {
     return (
       <div className={"thPlayerTile"}>
-        <p className={"name"}>{"Name: "+this.props.player.name}</p>
-        <p className={"money"}>{"Money: "+this.props.player.money}</p>
-        {this.props.player.bet > 0 && <p className={"bet"}>{"Bet: "+this.props.player.bet}</p>}
+        {this.blind.length > 0 && <p className={"blind"}>{this.blind}</p>}
+        <p className={"name"}>{this.props.player.name}</p>
+        <p className={"money"}>{this.props.player.money}</p>
+        {this.props.player.bet > 0 && <p className={"bet"}>{this.props.player.bet}</p>}
         <p className={"status"}>{this.status}</p>
         {this.props.showCards &&
           <div className={"cards"}>

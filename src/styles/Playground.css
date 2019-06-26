@@ -9,7 +9,12 @@
 
 #playerContainer {
     top: 20%;
+    left: 0;
+    width: 100%;
     position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 #table {
@@ -28,8 +33,8 @@
 
 #myCards {
     position: absolute;
-    right: 0;
-    bottom: 0;
+    left: calc(50% - 50px);
+    bottom: 40px;
     display: flex;
     flex-direction: row;
 }

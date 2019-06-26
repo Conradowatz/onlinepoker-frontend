@@ -1,33 +1,46 @@
 .thPlayerTile {
-    display: grid;
-    grid-template-areas:
-        "name status cards"
-        "money bet cards";
+    position: relative;
     border: 1px solid #b3b3b3;
-    border-radius: 5px;
     grid-column-gap: 5px;
-    max-width: 300px;
+    max-width: 200px;
+    min-width: 100px;
     background: white;
+    padding: 10px;
+}
+
+.thPlayerTile .blind {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    color: var(--magenta);
 }
 
 .thPlayerTile .name {
-    grid-area: name;
+    font-weight: bold;
+    margin: 0;
 }
 
 .thPlayerTile .money {
-    grid-area: money;
+    width: 100%;
+    text-align: left;
+    margin: 0;
 }
 
 .thPlayerTile .bet {
-    grid-area: bet;
+    width: 100%;
+    text-align: right;
+    margin: 0;
 }
 
 .thPlayerTile .status {
-    grid-area: status;
+    width: 100%;
+    text-align: center;
+    margin: 0;
 }
 
 .thPlayerTile .cards {
-    grid-area: cards;
+    margin: 0;
     display: flex;
     flex-direction: row;
     align-items: center;
