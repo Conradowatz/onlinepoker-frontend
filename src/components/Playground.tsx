@@ -6,8 +6,7 @@ import {
   THNewRound,
   THPlayer,
   THPlayerAction,
-  THStartGame,
-  THYourTurn
+  THStartGame
 } from "../pokerapi/messages/ApiObjects";
 import {PokerClient} from "../pokerapi/PokerClient";
 import CardComponent from "./CardComponent";
@@ -17,12 +16,14 @@ import ActionButtonRow from "./ActionButtonRow";
 
 interface Props {
   startEvent: THStartGame,
+  spectate: boolean,
   api: PokerClient,
   leaveGame: () => void
 }
 
 interface State {
   players: THPlayer[],
+  myIndex: number,
   myCards: Card[],
   communityCards: Card[],
   pot: number,
@@ -41,6 +42,7 @@ export default class Playground extends React.Component<Props, State> {
 
     this.state = {
       players: props.startEvent.players,
+      myIndex: props.startEvent.yourIndex,
       myCards: [],
       communityCards: [],
       pot: 0,
@@ -79,7 +81,11 @@ export default class Playground extends React.Component<Props, State> {
             }
           </div>
         </div>
-        <ActionButtonRow api={this.props.api} onGiveUp={() => this.props.leaveGame()} />
+        {!this.props.spectate &&
+          <ActionButtonRow api={this.props.api} onGiveUp={() => this.props.leaveGame()}
+                           money={this.getMyself().money} bet={this.getMyself().bet}
+                           smallBlind={this.state.smallBlind}/>
+        }
         <div id={"myCards"}>
           {this.state.myCards.map((c, i) =>
               <CardComponent hidden={false} value={c.value} color={c.color} key={i}/>
@@ -130,4 +136,8 @@ export default class Playground extends React.Component<Props, State> {
     };
     this.props.api.sendMessage("th_action", request);
   }
+
+  private getMyself():THPlayer {
+    return this.state.players[this.state.myIndex];
+}
 }

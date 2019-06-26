@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {PokerClient} from "../pokerapi/PokerClient";
-import {LobbyPreview, GetLobbiesResponse, CreateLobbyRequest, Lobby} from '../pokerapi/messages/ApiObjects';
+import {LobbyPreview, GetLobbiesResponse} from '../pokerapi/messages/ApiObjects';
 import JoinLobbyDialog from "./JoinLobbyDialog";
 import "../styles/LobbyList.css"
 import "../styles/Dialog.css"

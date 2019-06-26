@@ -42,7 +42,7 @@ export default class LobbyComponent extends React.Component<Props, State> {
             <button id={"startGame"} disabled={this.state.lobby.leader !== this.state.lobby.yourId}
                     onClick={() => this.startGame()}>Start Game
             </button>
-            <button id={"leaveLobby"} onClick={this.props.onLeave}>Leave Loby</button>
+            <button id={"leaveLobby"} onClick={this.props.onLeave}>Leave Lobby</button>
             <p className={"lobbyName"}>{this.state.lobby.name}</p>
           </div>
           }
@@ -51,7 +51,7 @@ export default class LobbyComponent extends React.Component<Props, State> {
               <SettingsTab api={this.props.api} lobby={this.state.lobby}/>
             }
             {this.state.isGameStarted && this.state.startEvent !== undefined &&
-              <Playground api={this.props.api} startEvent={this.state.startEvent} leaveGame={this.props.onLeave}/>
+              <Playground api={this.props.api} startEvent={this.state.startEvent} leaveGame={this.props.onLeave} spectate={this.state.spectate}/>
             }
           </div>
           <Chat api={this.props.api} myId={this.state.lobby.yourId}/>

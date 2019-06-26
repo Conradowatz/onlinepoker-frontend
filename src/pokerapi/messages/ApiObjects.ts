@@ -75,11 +75,13 @@ export interface THPlayer extends Player {
 
 export interface THStartGame extends PokerMessage {
   players: THPlayer[];
+  yourIndex: number;
   settings: THSettings
 }
 
 export interface THNewRound extends PokerMessage {
   players: THPlayer[];
+  yourIndex: number;
   yourCards: Card[];
   hand: number;
   smallBlind: number;
