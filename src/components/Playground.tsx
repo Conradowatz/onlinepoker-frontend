@@ -11,6 +11,7 @@ import {
 } from "../pokerapi/messages/ApiObjects";
 import {PokerClient} from "../pokerapi/PokerClient";
 import CardComponent from "./CardComponent";
+import THPlayerTile from "./THPlayerTile";
 
 
 interface Props {
@@ -69,6 +70,11 @@ export default class Playground extends React.Component<Props, State> {
                   <CardComponent hidden={false} key={i} value={c.value} color={c.color}/>
               )}
             </div>
+          </div>
+          <div id={"playerContainer"}>
+            { this.state.players.map((p) =>
+              <THPlayerTile player={p} showCards={true} key={p.id}/>)
+            }
           </div>
         </div>
         <div id={"actionButtons"}>
