@@ -71,6 +71,7 @@ export interface THPlayer extends Player {
   bet: number;
   allIn: boolean;
   folded: boolean;
+  index: number;
 }
 
 export interface THStartGame extends PokerMessage {
@@ -98,6 +99,9 @@ export interface THPlayerAction extends PokerMessage {
 
 export interface THYourTurn extends PokerMessage {
   options: string[];
+  minRaise: number;
+  maxRaise: number;
+  firstBet: boolean;
   timeout: number;
 }
 
@@ -108,6 +112,8 @@ export interface THAction extends PokerMessage {
 
 export interface THCommunityCard extends PokerMessage {
   communityCards: Card[];
+  players: THPlayer[];
+  pot: number;
 }
 
 export interface THEndRound extends PokerMessage {

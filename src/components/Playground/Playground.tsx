@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../styles/Playground.css";
+import "../../styles/Playground.css";
 import {
   Card, THAction,
   THCommunityCard, THEndRound,
@@ -7,11 +7,13 @@ import {
   THPlayer,
   THPlayerAction,
   THStartGame
-} from "../pokerapi/messages/ApiObjects";
-import {PokerClient} from "../pokerapi/PokerClient";
+} from "../../pokerapi/messages/ApiObjects";
+import {PokerClient} from "../../pokerapi/PokerClient";
 import CardComponent from "./CardComponent";
 import THPlayerTile from "./THPlayerTile";
 import ActionButtonRow from "./ActionButtonRow";
+import RoundInfo from "./RoundInfo";
+import ActivePlayerList from "./ActivePlayerList";
 
 
 interface Props {
@@ -22,17 +24,10 @@ interface Props {
 }
 
 interface State {
-  players: THPlayer[],
   myIndex: number,
   myCards: Card[],
   communityCards: Card[],
-  pot: number,
-  turn: number,
-  hand: number,
-  smallBlind: number,
-  bigBlind: number,
-  smallBlindPlayer: number,
-  bigBlindPlayer: number
+  pot: number
 }
 
 export default class Playground extends React.Component<Props, State> {
@@ -41,17 +36,10 @@ export default class Playground extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      players: props.startEvent.players,
       myIndex: props.startEvent.yourIndex,
       myCards: [],
       communityCards: [],
-      pot: 0,
-      turn: 0,
-      hand: 0,
-      smallBlind: 0,
-      bigBlind: 0,
-      smallBlindPlayer: 0,
-      bigBlindPlayer: 0
+      pot: 0
     };
 
     this.registerListeners();
@@ -60,10 +48,7 @@ export default class Playground extends React.Component<Props, State> {
   render() {
     return (
       <div id={"playground"}>
-        <div id={"roundInfo"}>
-          <p className={"blinds"}>{this.state.smallBlind}/{this.state.bigBlind}</p>
-          <p className={"hand"}>Hand: {this.state.hand}</p>
-        </div>
+        <RoundInfo api={this.props.api}/>
         <div id={"tableContainer"}>
           <div id={"table"}>
             <div id={"communityCards"}>
@@ -72,19 +57,10 @@ export default class Playground extends React.Component<Props, State> {
               )}
             </div>
           </div>
-          <div id={"playerContainer"}>
-            { this.state.players.map((p) =>
-              <THPlayerTile player={p} showCards={false} key={p.id}
-                            iActive={this.state.turn===p.id}
-                            isBigBlind={this.state.bigBlindPlayer===p.id}
-                            isSmallBlind={this.state.smallBlindPlayer===p.id}/>)
-            }
-          </div>
+          <ActivePlayerList api={this.props.api} />
         </div>
         {!this.props.spectate &&
-          <ActionButtonRow api={this.props.api} onGiveUp={() => this.props.leaveGame()}
-                           money={this.getMyself().money} bet={this.getMyself().bet}
-                           smallBlind={this.state.smallBlind}/>
+          <ActionButtonRow api={this.props.api} onGiveUp={() => this.props.leaveGame()} />
         }
         <div id={"myCards"}>
           {this.state.myCards.map((c, i) =>
@@ -99,13 +75,7 @@ export default class Playground extends React.Component<Props, State> {
 
     this.props.api.on("th_new_round", (event: THNewRound) => {
       this.setState({
-        players: event.players,
-        myCards: event.yourCards,
-        hand: event.hand,
-        smallBlind: event.smallBlind,
-        bigBlind: event.bigBlind,
-        smallBlindPlayer: event.smallBlindPlayer,
-        bigBlindPlayer: event.bigBlindPlayer
+        myCards: event.yourCards
       });
     });
 
@@ -137,7 +107,4 @@ export default class Playground extends React.Component<Props, State> {
     this.props.api.sendMessage("th_action", request);
   }
 
-  private getMyself():THPlayer {
-    return this.state.players[this.state.myIndex];
-}
 }

@@ -1,13 +1,10 @@
-import {PokerClient} from "../pokerapi/PokerClient";
+import {PokerClient} from "../../pokerapi/PokerClient";
 import * as React from "react";
-import {THAction, THYourTurn} from "../pokerapi/messages/ApiObjects";
-import Dialog from "./Dialog";
+import {THAction, THNewRound, THPlayerAction, THYourTurn} from "../../pokerapi/messages/ApiObjects";
+import Dialog from "../Dialog";
 
 interface Props {
   api: PokerClient,
-  smallBlind: number,
-  money: number,
-  bet: number,
   onGiveUp: () => void
 }
 
@@ -17,7 +14,10 @@ interface State {
   isRaiseDialog: boolean,
   isAllInDialog: boolean,
   timePercentage: number,
-  value: number
+  value: number,
+  minRaise: number,
+  maxRaise: number,
+  firstBet: boolean
 }
 
 export default class ActionButtonRow extends React.Component<Props, State> {
@@ -35,7 +35,10 @@ export default class ActionButtonRow extends React.Component<Props, State> {
       isRaiseDialog: false,
       isAllInDialog: false,
       timePercentage: 0,
-      value: props.smallBlind
+      value: 0,
+      minRaise: 0,
+      maxRaise: 0,
+      firstBet: true
     };
 
     this.registerListeners();
@@ -52,7 +55,7 @@ export default class ActionButtonRow extends React.Component<Props, State> {
           <button disabled={!this.state.availableOptions.includes("check")}
             onClick={() => this.takeAction("check")}>Check</button>
           <button disabled={!this.state.availableOptions.includes("raise")}
-            onClick={() => this.setState({isRaiseDialog: true})}>{this.props.bet>0?"Raise...":"Bet..."}</button>
+            onClick={() => this.setState({isRaiseDialog: true})}>{this.state.firstBet?"Bet...":"Raise..."}</button>
           <button disabled={!this.state.availableOptions.includes("allin")}
             onClick={() => this.setState({isAllInDialog: true})}>All In…</button>
           <button onClick={() => this.setState({isGiveUpDialog: true})}>Give Up…</button>
@@ -66,13 +69,13 @@ export default class ActionButtonRow extends React.Component<Props, State> {
         }
         {this.state.isRaiseDialog &&
         <Dialog buttons={[
-          <button onClick={() => {this.takeAction("raise"); this.setState({isRaiseDialog: false})}}>{this.props.bet>0?"Raise":"Bet"}</button>,
+          <button onClick={() => {this.takeAction("raise"); this.setState({isRaiseDialog: false})}}>{this.state.firstBet?"Bet":"Raise"}</button>,
           <button onClick={() => this.setState({isRaiseDialog: false})}>Cancel</button>
-        ]} message={"How much do you want to bet?"} title={this.props.bet>0?"Raise...":"Bet..."}
+        ]} message={"How much do you want to bet?"} title={this.state.firstBet?"Bet...":"Raise..."}
         children={
           <div>
-            <input type={"range"} min={this.props.smallBlind} max={this.props.money} value={this.state.value} onChange={(e) => this.setState({value: Number.parseInt(e.target.value)})}/>
-            <input type={"number"} min={this.props.smallBlind} max={this.props.money} value={this.state.value} onChange={(e) => this.setState({value: Number.parseInt(e.target.value)})}/>
+            <input type={"range"} min={this.state.minRaise} max={this.state.maxRaise} value={this.state.value} onChange={(e) => this.setState({value: Number.parseInt(e.target.value)})}/>
+            <input type={"number"} min={this.state.minRaise} max={this.state.maxRaise} value={this.state.value} onChange={(e) => this.setState({value: Number.parseInt(e.target.value)})}/>
           </div>
         }/>
         }
@@ -91,7 +94,10 @@ export default class ActionButtonRow extends React.Component<Props, State> {
     this.props.api.on("th_your_turn", (message: THYourTurn) => {
       this.setState({
         availableOptions: message.options,
-        timePercentage: message.timeout === 0 ? 0 : 100
+        timePercentage: message.timeout === 0 ? 0 : 100,
+        minRaise: message.minRaise,
+        maxRaise: message.maxRaise,
+        firstBet: message.firstBet
       });
       if (message.timeout > 0) {
         this.timeLeft = message.timeout;
@@ -106,10 +112,10 @@ export default class ActionButtonRow extends React.Component<Props, State> {
     });
   }
 
-  private takeAction(action: "call"|"fold"|"check"|"raise"|"allin"|"giveup", value?: number) {
+  private takeAction(action: "call"|"fold"|"check"|"raise"|"allin"|"giveup") {
     let message:THAction = {
       action: action,
-      value: value
+      value: this.state.value
     };
     this.props.api.sendMessage("th_action", message);
     this.setState({availableOptions: []});

@@ -6,7 +6,7 @@ import {THStartGame, Lobby} from "../pokerapi/messages/ApiObjects";
 import Chat from "./Chat";
 import SettingsTab from "./SettingsTab";
 import PlayerList from "./PlayerList";
-import Playground from "./Playground";
+import Playground from "./Playground/Playground";
 
 interface  State {
   lobby: Lobby,
