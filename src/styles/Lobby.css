@@ -18,6 +18,12 @@
         "content content chat";
 }
 
+#lobbyContainer.spectate.playing {
+    grid-template-areas:
+        "header header chat"
+        "content content chat";
+}
+
 #playerList {
     grid-area: players;
     background-color: var(--white);

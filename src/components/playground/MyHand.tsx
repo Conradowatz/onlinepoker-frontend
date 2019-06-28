@@ -48,7 +48,7 @@ export default class MyHand extends React.Component<Props, State> {
           </div>
           <div id={"myCards"}>
             {this.state.cards.map((c, i) =>
-                <CardComponent hidden={false} value={c.value} color={c.color} key={i}/>
+                <CardComponent hidden={false} value={c.value} color={c.color} key={i} highlighted={false}/>
             )}
           </div>
         </div>
@@ -56,23 +56,32 @@ export default class MyHand extends React.Component<Props, State> {
   }
 
   private registerListeners() {
+    this.th_new_round = this.th_new_round.bind(this);
+    this.props.api.addListener("th_new_round", this.th_new_round);
+    this.th_player_action = this.th_player_action.bind(this);
+    this.props.api.addListener("th_player_action", this.th_player_action);
+  }
 
-    this.props.api.on("th_new_round", (message: THNewRound) => {
+  componentWillUnmount(): void {
+    this.props.api.removeListener("th_new_round", this.th_new_round);
+    this.props.api.removeListener("th_player_action", this.th_player_action);
+  }
+
+  private th_new_round(message: THNewRound) {
+    this.setState({
+      cards: message.yourCards,
+      money: message.players[message.yourIndex].money,
+      bet: message.players[message.yourIndex].bet
+    });
+  }
+
+  private th_player_action(message: THPlayerAction) {
+    if (message.player.id===this.props.myId) {
       this.setState({
-        cards: message.yourCards,
-        money: message.players[message.yourIndex].money,
-        bet: message.players[message.yourIndex].bet
+        cards: message.player.folded?[]:this.state.cards,
+        money: message.player.money,
+        bet: message.player.bet
       });
-    });
-
-    this.props.api.on("th_player_action", (message: THPlayerAction) => {
-      if (message.player.id===this.props.myId) {
-        this.setState({
-          cards: message.player.folded?[]:this.state.cards,
-          money: message.player.money,
-          bet: message.player.bet
-        });
-      }
-    });
+    }
   }
 }

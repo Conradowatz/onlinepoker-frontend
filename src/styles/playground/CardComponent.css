@@ -11,6 +11,10 @@
     padding: 5px;
 }
 
+.Card_front.highlighted {
+    background-image: url("../../assets/card_front_win_sprite.png");
+}
+
 .Card_front p {
     font-size: 1.5em;
     margin-right: 3px;

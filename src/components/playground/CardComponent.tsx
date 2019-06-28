@@ -6,19 +6,20 @@ import colorS from "../../assets/color_s.png";
 
 import '../../styles/playground/CardComponent.css';
 
-interface props {
+interface Props {
   hidden: boolean,
   value: string,
-  color: string
+  color: string,
+  highlighted: boolean
 }
 
-export default class CardComponent extends React.Component<props> {
+export default class CardComponent extends React.Component<Props> {
     render() {
         return (
             <div className={"cardContainer"}>
-              { this.props.hidden && <div className={'Card_back'}/>}
+              { this.props.hidden && <div className={"Card_back"}/>}
               {!this.props.hidden &&
-                <div className={'Card_front'}>
+                <div className={this.props.highlighted?"Card_front highlighted":"Card_front"}>
                   <p>{this.props.value}</p>
                   <img src={this.getColorImg()} alt={this.props.color}/>
                 </div>

@@ -17,7 +17,8 @@ interface State {
 
 interface Props {
   api: PokerClient,
-  myId: number
+  myId: number,
+  spectate: boolean
 }
 
 export default class Chat extends React.Component<Props, State> {
@@ -49,9 +50,9 @@ export default class Chat extends React.Component<Props, State> {
           <div id={"chatInputContainer"}>
             <input
                 value={this.state.currentMessage} onChange={(e) => this.setState({currentMessage: e.target.value})}
-                onKeyPress={(e) => {if (e.key === "Enter") this.sendMessage()}}
+                onKeyPress={(e) => {if (e.key === "Enter") this.sendMessage()}} disabled={this.props.spectate}
             />
-            <button onClick={() => this.sendMessage()}>Send</button>
+            <button onClick={() => this.sendMessage()} disabled={this.props.spectate}>Send</button>
           </div>
         </div>
     );
@@ -65,15 +66,22 @@ export default class Chat extends React.Component<Props, State> {
   }
 
   private registerListeners() {
-    this.props.api.on("chat_in", (response: ChatIn) => {
-      this.setState(prevState => ({
-        messages: [...prevState.messages, {
-          sender: response.sender,
-          message: response.message,
-          fromMe: response.sender.id === this.props.myId
-        }]
-      }));
-    });
+    this.chat_in = this.chat_in.bind(this);
+    this.props.api.addListener("chat_in", this.chat_in);
+  }
+
+  componentWillUnmount(): void {
+    this.props.api.removeListener("chat_in", this.chat_in);
+  }
+
+  private chat_in(message: ChatIn) {
+    this.setState(prevState => ({
+      messages: [...prevState.messages, {
+        sender: message.sender,
+        message: message.message,
+        fromMe: message.sender.id === this.props.myId
+      }]
+    }));
   }
 
   private sendMessage() {

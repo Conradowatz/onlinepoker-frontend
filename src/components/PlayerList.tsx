@@ -21,11 +21,7 @@ export default class PlayerList extends React.Component<Props, State> {
       players: props.players
     };
 
-    props.api.on("lobby_update", (lobby: Lobby) => {
-      this.setState({
-        players: Object.values(lobby.players)
-      });
-    });
+    this.registerListeners();
 
   }
 
@@ -39,5 +35,20 @@ export default class PlayerList extends React.Component<Props, State> {
         }
       </div>
     );
+  }
+
+  private registerListeners() {
+    this.lobby_update = this.lobby_update.bind(this);
+    this.props.api.addListener("lobby_update", this.lobby_update);
+  }
+
+  componentWillUnmount(): void {
+    this.props.api.removeListener("lobby_update", this.lobby_update);
+  }
+
+  private lobby_update(message: Lobby) {
+    this.setState({
+      players: Object.values(message.players)
+    });
   }
 }

@@ -10,24 +10,16 @@ import MyHand from "./MyHand";
 
 
 interface Props {
-  startEvent: THStartGame,
+  startEvent?: THStartGame,
   spectate: boolean,
   api: PokerClient,
-  leaveGame: () => void
+  onLost: () => void
 }
 
-interface State {
-
-}
-
-export default class Playground extends React.Component<Props, State> {
+export default class Playground extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
-
-    this.state = {
-
-    };
 
     this.registerListeners();
   }
@@ -43,9 +35,9 @@ export default class Playground extends React.Component<Props, State> {
           <ActivePlayerList api={this.props.api} />
         </div>
         {!this.props.spectate &&
-          <ActionButtonRow api={this.props.api} onGiveUp={() => this.props.leaveGame()} />
+          <ActionButtonRow api={this.props.api} onGiveUp={() => this.props.onLost()} />
         }
-        {!this.props.spectate &&
+        {!this.props.spectate && this.props.startEvent !== undefined &&
           <MyHand api={this.props.api} myId={this.props.startEvent.players[this.props.startEvent.yourIndex].id}/>
         }
       </div>

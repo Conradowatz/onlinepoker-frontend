@@ -13,6 +13,7 @@
   flex-direction: row;
   align-items: center;
   color: white;
+  z-index: 1;
 }
 
 #pot img {
@@ -22,6 +23,16 @@
 #pot p {
   font-size: 1.5em;
   font-weight: bold;
+}
+
+#winningHand {
+  position: absolute;
+  right: calc(50% - 180px);
+  bottom: 0;
+  color: gold;
+  font-size: 1.5em;
+  font-weight: bold;
+  z-index: 1;
 }
 
 #communityCards {

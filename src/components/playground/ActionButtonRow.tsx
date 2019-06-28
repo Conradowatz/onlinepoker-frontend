@@ -64,14 +64,14 @@ export default class ActionButtonRow extends React.Component<Props, State> {
         <div id={"timeoutBar"}/>
         {this.state.isGiveUpDialog &&
             <Dialog buttons={[
-                <button onClick={() => this.props.onGiveUp()}>Give Up!</button>,
-                <button onClick={() => this.setState({isGiveUpDialog: false})}>Cancel</button>
+                <button key={0} onClick={() => this.props.onGiveUp()}>Give Up!</button>,
+                <button key={1} onClick={() => this.setState({isGiveUpDialog: false})}>Cancel</button>
             ]} message={"Are you sure?"} title={"Give up..."}/>
         }
         {this.state.isRaiseDialog &&
         <Dialog buttons={[
-          <button onClick={() => {this.takeAction("raise"); this.setState({isRaiseDialog: false})}}>{this.state.firstBet?"Bet":"Raise"}</button>,
-          <button onClick={() => this.setState({isRaiseDialog: false})}>Cancel</button>
+          <button key={0} onClick={() => {this.takeAction("raise"); this.setState({isRaiseDialog: false})}}>{this.state.firstBet?"Bet":"Raise"}</button>,
+          <button key={1} onClick={() => this.setState({isRaiseDialog: false})}>Cancel</button>
         ]} message={"How much do you want to bet?"} title={this.state.firstBet?"Bet...":"Raise..."}
         children={
           <div>
@@ -82,8 +82,8 @@ export default class ActionButtonRow extends React.Component<Props, State> {
         }
         {this.state.isAllInDialog &&
         <Dialog buttons={[
-          <button onClick={() => {this.takeAction("allin"); this.setState({isAllInDialog: false})}}>All In!</button>,
-          <button onClick={() => this.setState({isAllInDialog: false})}>Cancel</button>
+          <button key={0} onClick={() => {this.takeAction("allin"); this.setState({isAllInDialog: false})}}>All In!</button>,
+          <button key={1} onClick={() => this.setState({isAllInDialog: false})}>Cancel</button>
         ]} message={"You will bet all your chips. Are you sure?"} title={"All In..."}/>
         }
       </div>
@@ -91,26 +91,32 @@ export default class ActionButtonRow extends React.Component<Props, State> {
   }
 
   private registerListeners() {
+    this.th_your_turn = this.th_your_turn.bind(this);
+    this.props.api.addListener("th_your_turn", this.th_your_turn);
+  }
 
-    this.props.api.on("th_your_turn", (message: THYourTurn) => {
-      this.setState({
-        availableOptions: message.options,
-        timePercentage: message.timeout === 0 ? 0 : 100,
-        minRaise: message.minRaise,
-        maxRaise: message.maxRaise,
-        firstBet: message.firstBet
-      });
-      if (message.timeout > 0) {
-        this.timeLeft = message.timeout;
-        this.timerId = window.setInterval(() => {
-          this.timeLeft--;
-          this.setState({
-            timePercentage: (this.timeLeft/message.timeout)*100
-          });
-          if (this.timeLeft<=0 && this.timerId!==undefined) clearInterval(this.timerId);
-        }, 1000);
-      }
+  componentWillUnmount(): void {
+    this.props.api.removeListener("th_your_turn", this.th_your_turn);
+  }
+
+  private th_your_turn(message: THYourTurn) {
+    this.setState({
+      availableOptions: message.options,
+      timePercentage: message.timeout === 0 ? 0 : 100,
+      minRaise: message.minRaise,
+      maxRaise: message.maxRaise,
+      firstBet: message.firstBet
     });
+    if (message.timeout > 0) {
+      this.timeLeft = message.timeout;
+      this.timerId = window.setInterval(() => {
+        this.timeLeft--;
+        this.setState({
+          timePercentage: (this.timeLeft/message.timeout)*100
+        });
+        if (this.timeLeft<=0 && this.timerId!==undefined) clearInterval(this.timerId);
+      }, 1000);
+    }
   }
 
   private takeAction(action: "call"|"fold"|"check"|"raise"|"allin"|"giveup") {

@@ -29,7 +29,7 @@ export default class Game extends React.Component<Props, State> {
             shownError: null
         };
 
-        this.api = new PokerClient("ws://localhost:8080", true);
+        this.api = new PokerClient("ws://"+window.location.hostname+":8080", true);
         this.connectToServer();
     }
     render() {
@@ -64,14 +64,6 @@ export default class Game extends React.Component<Props, State> {
     //successfully connected to the server
     this.api.on("ready", () => {
       this.setState({showLobbyList: true, showLobby: false});
-      //DEBUG START
-      let clr: CreateLobbyRequest = {
-        name: "Coolio Lobby",
-        hidden: false,
-        playerName: "Mr Coolio"
-      };
-      this.api.sendMessage("create_lobby", clr);
-      //DEBUG END
     });
 
     //an error occurred during the connection (but still connected)

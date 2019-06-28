@@ -125,7 +125,7 @@ export interface THEndRound extends PokerMessage {
 
 export interface JoinLobbyResponse extends PokerMessage {
   success: boolean;
-  reason?: "full" | "unknown_id" | "not_joinable";
+  reason?: "full" | "unknown_id" | "not_joinable" | "in_other_lobby";
   lobby?: Lobby;
 }
 

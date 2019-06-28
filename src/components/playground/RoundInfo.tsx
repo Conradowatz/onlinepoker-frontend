@@ -37,13 +37,19 @@ export default class RoundInfo extends React.Component<Props, State> {
   }
 
   private registerListeners() {
+    this.th_new_round = this.th_new_round.bind(this);
+    this.props.api.addListener("th_new_round", this.th_new_round);
+  }
 
-    this.props.api.on("th_new_round", (message: THNewRound) => {
-      this.setState({
-        smallBlind: message.smallBlind,
-        bigBlind: message.bigBlind,
-        hand: message.hand
-      })
-    });
+  componentWillUnmount(): void {
+    this.props.api.removeListener("th_new_round", this.th_new_round);
+  }
+
+  private th_new_round(message: THNewRound) {
+    this.setState({
+      smallBlind: message.smallBlind,
+      bigBlind: message.bigBlind,
+      hand: message.hand
+    })
   }
 }

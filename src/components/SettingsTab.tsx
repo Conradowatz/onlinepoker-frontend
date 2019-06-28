@@ -47,24 +47,30 @@ export default class SettingsTab extends React.Component<Props, State> {
   }
 
   private registerListeners() {
+    this.lobby_update = this.lobby_update.bind(this);
+    this.props.api.addListener("lobby_update", this.lobby_update);
+  }
 
-    this.props.api.on("lobby_update", (newLobby: Lobby) => {
-      let canEdit = newLobby.yourId === newLobby.leader;
-      if (canEdit) {
-        this.setState({
-          settings: newLobby.settings,
-          somethingChanged: newLobby.settings !== this.state.changedSettings,
-          canEdit: true
-        });
-      } else {
-        this.setState({
-          settings: newLobby.settings,
-          changedSettings: newLobby.settings,
-          somethingChanged: false,
-          canEdit: false
-        })
-      }
-    });
+  componentWillUnmount(): void {
+    this.props.api.removeListener("lobby_update", this.lobby_update);
+  }
+
+  private lobby_update(newLobby: Lobby) {
+    let canEdit = newLobby.yourId === newLobby.leader;
+    if (canEdit) {
+      this.setState({
+        settings: newLobby.settings,
+        somethingChanged: newLobby.settings !== this.state.changedSettings,
+        canEdit: true
+      });
+    } else {
+      this.setState({
+        settings: newLobby.settings,
+        changedSettings: newLobby.settings,
+        somethingChanged: false,
+        canEdit: false
+      })
+    }
   }
 
   private saveSettings() {

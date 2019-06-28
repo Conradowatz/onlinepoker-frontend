@@ -1,51 +1,77 @@
 .thPlayerTile {
     position: relative;
-    border: 1px solid #b3b3b3;
     grid-column-gap: 5px;
-    max-width: 200px;
-    min-width: 100px;
+    width: 125px;
     background: white;
     padding: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
     transition: all ease 1s;
+    border-radius: 5px;
 }
 
 .thPlayerTile.active {
     transform: scale(1.1);
     margin-right: 10px;
     margin-left: 10px;
-    transform-origin: top;
     transition: all ease 1s;
+}
+
+.thPlayerTile.winner {
+    border: 4px solid gold;
 }
 
 .thPlayerTile .blind {
     position: absolute;
+    padding: 2px 2px 4px 4px;
     top: 0;
     right: 0;
     margin: 0;
-    color: var(--magenta);
+    color: white;
+    background: var(--magenta);
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .thPlayerTile .name {
     font-weight: bold;
-    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 0 0 10px 0;
 }
 
 .thPlayerTile .money {
-    width: 100%;
     text-align: left;
-    margin: 0;
+    margin: 0 0 0 5px;
+}
+
+.thPlayerTile .moneyContainer {
+    width: 100%;
+    height: 21px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .thPlayerTile .bet {
-    width: 100%;
     text-align: right;
-    margin: 0;
+    margin: 0 0 0 5px;
+}
+
+.thPlayerTile .betContainer {
+    width: 100%;
+    height: 21px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
 }
 
 .thPlayerTile .status {
     width: 100%;
     text-align: center;
-    margin: 0;
+    margin: 5px 0 0 0;
 }
 
 .thPlayerTile .cards {
@@ -53,6 +79,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
 
 .thPlayerTile .cards > *:first-child {
