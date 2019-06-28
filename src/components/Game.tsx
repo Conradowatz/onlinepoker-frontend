@@ -19,7 +19,6 @@ interface Props {
 
 export default class Game extends React.Component<Props, State> {
 
-    state: State;
     api: PokerClient;
 
     constructor(props: Props) {

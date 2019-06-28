@@ -6,7 +6,7 @@ import {THStartGame, Lobby} from "../pokerapi/messages/ApiObjects";
 import Chat from "./Chat";
 import SettingsTab from "./SettingsTab";
 import PlayerList from "./PlayerList";
-import Playground from "./Playground/Playground";
+import Playground from "./playground/Playground";
 
 interface  State {
   lobby: Lobby,
@@ -25,6 +25,7 @@ export default class LobbyComponent extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+
     this.state = {
       lobby: props.lobby,
       spectate: !(props.lobby.players.hasOwnProperty(props.lobby.yourId)),

@@ -1,0 +1,33 @@
+#tableCenter {
+  height: 140px;
+  position: absolute;
+  width: calc(100% - 140px);
+  top: calc(50% - 10px);
+}
+
+#pot {
+  position: absolute;
+  left: calc(50% - 180px);
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+}
+
+#pot img {
+  margin-right: 10px;
+}
+
+#pot p {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+#communityCards {
+  position: absolute;
+  right: calc(50% - 120px);
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+}

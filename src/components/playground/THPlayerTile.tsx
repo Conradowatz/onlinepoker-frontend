@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/THPlayerTile.css"
+import "../../styles/playground/THPlayerTile.css"
 import {THPlayer} from "../../pokerapi/messages/ApiObjects";
 import CardComponent from "./CardComponent";
 
@@ -15,7 +15,7 @@ export default class THPlayerTile extends React.Component<Props> {
 
   render() {
     return (
-      <div className={"thPlayerTile"}>
+      <div className={this.props.iActive?"thPlayerTile active":"thPlayerTile"}>
         {this.getBlindText().length > 0 && <p className={"blind"}>{this.getBlindText()}</p>}
         <p className={"name"}>{this.props.player.name}</p>
         <p className={"money"}>{this.props.player.money}</p>

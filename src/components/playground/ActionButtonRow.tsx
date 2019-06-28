@@ -1,7 +1,8 @@
 import {PokerClient} from "../../pokerapi/PokerClient";
 import * as React from "react";
-import {THAction, THNewRound, THPlayerAction, THYourTurn} from "../../pokerapi/messages/ApiObjects";
+import {THAction, THYourTurn} from "../../pokerapi/messages/ApiObjects";
 import Dialog from "../Dialog";
+import "../../styles/playground/ActionButtonRow.css"
 
 interface Props {
   api: PokerClient,

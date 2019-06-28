@@ -3,7 +3,7 @@
 }
 
 .Card_front {
-    background-image: url('../assets/card_front_sprite.png');
+    background-image: url('../../assets/card_front_sprite.png');
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -18,7 +18,7 @@
 }
 
 .Card_back {
-    background-image: url('../assets/card_back_sprite.png');
+    background-image: url('../../assets/card_back_sprite.png');
 }
 .cardContainer, .Card_front, .Card_back {
     width: 50px;

@@ -1,6 +1,7 @@
 import * as React from "react";
 import {PokerClient} from "../../pokerapi/PokerClient";
 import {THNewRound} from "../../pokerapi/messages/ApiObjects";
+import "../../styles/playground/RoundInfo.css"
 
 interface Props {
   api: PokerClient
@@ -23,13 +24,7 @@ export default class RoundInfo extends React.Component<Props, State> {
       hand: 0
     };
 
-    props.api.on("th_new_round", (message: THNewRound) => {
-      this.setState({
-        smallBlind: message.smallBlind,
-        bigBlind: message.bigBlind,
-        hand: message.hand
-      })
-    });
+    this.registerListeners();
   }
 
   render() {
@@ -39,5 +34,16 @@ export default class RoundInfo extends React.Component<Props, State> {
           <p className={"hand"}>Hand: {this.state.hand}</p>
         </div>
     );
+  }
+
+  private registerListeners() {
+
+    this.props.api.on("th_new_round", (message: THNewRound) => {
+      this.setState({
+        smallBlind: message.smallBlind,
+        bigBlind: message.bigBlind,
+        hand: message.hand
+      })
+    });
   }
 }

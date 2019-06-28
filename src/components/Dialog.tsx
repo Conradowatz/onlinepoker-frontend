@@ -13,7 +13,7 @@ interface Props {
 
 export default class Dialog extends React.Component<Props, State> {
 
-  render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | React.ReactNodeArray | React.ReactPortal | boolean | null | undefined {
+  render() {
     return (
         <div className={"dialog"}>
           {this.props.title !== undefined && <h2>{this.props.title}</h2>}

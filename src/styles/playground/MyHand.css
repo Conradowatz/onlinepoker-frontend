@@ -1,0 +1,47 @@
+#myHand {
+  position: absolute;
+  width: 100%;
+  height: 120px;
+  bottom: 40px;
+}
+
+#myMoney {
+  position: absolute;
+  right: calc(50% - 120px);
+  bottom: 25px;
+  width: fit-content;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#myMoney img {
+  margin-right: 5px;
+}
+
+#myBet {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+#myBet img {
+  margin-right: 5px;
+}
+
+#myCards {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  bottom: 0;
+  left: calc(50% - 50px);
+}
+
+#myCards >*:first-child {
+  margin-right: 5px;
+}

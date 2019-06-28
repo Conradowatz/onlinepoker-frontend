@@ -1,0 +1,9 @@
+#playerContainer {
+  top: 20%;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}

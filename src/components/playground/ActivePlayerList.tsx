@@ -7,6 +7,7 @@ import {
   THPlayer,
   THPlayerAction
 } from "../../pokerapi/messages/ApiObjects";
+import "../../styles/playground/ActivePlayerList.css"
 
 interface Props {
   api: PokerClient
