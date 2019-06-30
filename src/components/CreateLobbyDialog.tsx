@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import '../styles/Dialog.css';
 import Dialog from "./Dialog";
+import ToggleSwitch from "./ToggleSwitch";
 
 interface  State {
   playerName: string,
@@ -43,7 +44,7 @@ export default class CreateLobbyDialog extends React.Component<Props, State> {
                     value={this.state.lobbyName} onChange={(e) => this.checkLobbyName(e)}
                 />
                 <p>Hidden:</p>
-                <input type={"checkbox"} checked={this.state.hidden} onChange={(e) => this.setState({hidden: e.target.checked})}/>
+                <ToggleSwitch checked={this.state.hidden} onToggle={(checked) => this.setState({hidden: checked})}/>
               </div>
             }
             buttons={[

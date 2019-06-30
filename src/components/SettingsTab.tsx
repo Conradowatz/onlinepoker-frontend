@@ -44,6 +44,7 @@ export default class SettingsTab extends React.Component<Props, State> {
             />
           }
           <button disabled={!this.state.somethingChanged} onClick={() => this.saveSettings()}>Save</button>
+          <button disabled={!this.state.somethingChanged} onClick={() => this.setState({somethingChanged: false, changedSettings: Object.assign({}, this.state.settings)})}>Reset</button>
         </div>
     );
   }

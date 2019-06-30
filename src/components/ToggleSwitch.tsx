@@ -3,7 +3,7 @@ import * as React from "react";
 interface Props {
   checked: boolean,
   onToggle: (checked: boolean) => void,
-  disabled: boolean
+  disabled?: boolean
 }
 
 export default class ToggleSwitch extends React.Component<Props> {
@@ -15,7 +15,7 @@ export default class ToggleSwitch extends React.Component<Props> {
                  checked={this.props.checked}
                  onChange={(e) => this.props.onToggle(e.target.checked)}
                  disabled={this.props.disabled}/>
-            <span className="slider round"/>
+            <span className="switch-slider round"/>
         </label>
     );
   }

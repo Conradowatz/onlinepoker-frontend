@@ -22,6 +22,10 @@ export default class THSettingsTab extends React.Component<Props, State> {
     this.changedSettings = props.settings;
   }
 
+  componentDidUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>, snapshot?: any): void {
+    this.changedSettings = this.props.settings;
+  }
+
 
   render() {
     return (

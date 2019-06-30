@@ -6,6 +6,10 @@
   padding: 5px;
 }
 
+#settingsTable input[type=number] {
+  width: 100%;
+}
+
 #settingsTable .title {
   font-weight: bold;
   margin-right: 20px;
