@@ -18,9 +18,7 @@ interface Props {
 
 export default class Playground extends React.Component<Props> {
 
-  constructor(props: Props) {
-    super(props);
-
+  componentDidMount(): void {
     this.registerListeners();
   }
 

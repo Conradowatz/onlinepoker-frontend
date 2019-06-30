@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import '../styles/Lobby.css';
 import {PokerClient} from "../pokerapi/PokerClient";
-import {THStartGame, Lobby} from "../pokerapi/messages/ApiObjects";
+import {THStartGame, Lobby, THPlayer} from "../pokerapi/messages/ApiObjects";
 import Chat from "./Chat";
 import SettingsTab from "./SettingsTab";
 import PlayerList from "./PlayerList";
@@ -31,7 +31,9 @@ export default class LobbyComponent extends React.Component<Props, State> {
       spectate: !(props.lobby.players.hasOwnProperty(props.lobby.yourId)),
       isGameStarted: props.lobby.running
     };
+  }
 
+  componentDidMount(): void {
     this.registerListeners();
   }
 
@@ -81,12 +83,15 @@ export default class LobbyComponent extends React.Component<Props, State> {
     this.props.api.addListener("th_start", this.th_start);
     this.lobby_update = this.lobby_update.bind(this);
     this.props.api.addListener("lobby_update", this.lobby_update);
+    this.th_end_game = this.th_end_game.bind(this);
+    this.props.api.addListener("th_end_game", this.th_end_game);
 
   }
 
   componentWillUnmount(): void {
     this.props.api.removeListener("th_start", this.th_start);
     this.props.api.removeListener("lobby_update", this.lobby_update);
+    this.props.api.removeListener("th_end_game", this.th_end_game);
   }
 
   private th_start(message: THStartGame) {
@@ -100,5 +105,14 @@ export default class LobbyComponent extends React.Component<Props, State> {
     this.setState({
       isLeader: message.leader === message.yourId
     });
+  }
+
+  private th_end_game(winner: THPlayer) {
+
+    this.setState({
+      isGameStarted: false
+    })
+
+    //TODO Display Winner
   }
 }

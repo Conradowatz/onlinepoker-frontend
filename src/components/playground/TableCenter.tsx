@@ -27,7 +27,9 @@ export default class TableCenter extends React.Component<Props, State>{
       winningHand: "",
       winningCards: []
     };
+  }
 
+  componentDidMount(): void {
     this.registerListeners();
   }
 

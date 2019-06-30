@@ -27,7 +27,9 @@ export default class MyHand extends React.Component<Props, State> {
       money: 0,
       bet: 0
     };
+  }
 
+  componentDidMount(): void {
     this.registerListeners();
   }
 

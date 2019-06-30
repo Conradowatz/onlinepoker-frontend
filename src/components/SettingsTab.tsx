@@ -22,11 +22,13 @@ export default class SettingsTab extends React.Component<Props, State> {
     super(props);
     this.state = {
       settings: this.props.lobby.settings,
-      changedSettings: this.props.lobby.settings,
+      changedSettings: Object.assign({}, this.props.lobby.settings),
       somethingChanged: false,
       canEdit: props.lobby.yourId === props.lobby.leader
     };
+  }
 
+  componentDidMount(): void {
     this.registerListeners();
   }
 
@@ -37,11 +39,11 @@ export default class SettingsTab extends React.Component<Props, State> {
             this.state.settings.gameMode === "texasholdem" &&
             <THSettingsTab
                 settings={this.state.changedSettings as THSettings}
-                onChange={(settings) => this.setState({changedSettings: settings})}
+                onChange={(settings) => this.setState({changedSettings: settings, somethingChanged: !this.isEqual(settings, this.state.settings)})}
                 canEdit={this.state.canEdit}
             />
           }
-          <button disabled={!this.state.canEdit} onClick={() => this.saveSettings()}>Save</button>
+          <button disabled={!this.state.somethingChanged} onClick={() => this.saveSettings()}>Save</button>
         </div>
     );
   }
@@ -60,7 +62,7 @@ export default class SettingsTab extends React.Component<Props, State> {
     if (canEdit) {
       this.setState({
         settings: newLobby.settings,
-        somethingChanged: newLobby.settings !== this.state.changedSettings,
+        somethingChanged: !this.isEqual(newLobby.settings, this.state.changedSettings),
         canEdit: true
       });
     } else {
@@ -75,5 +77,11 @@ export default class SettingsTab extends React.Component<Props, State> {
 
   private saveSettings() {
     this.props.api.sendMessage("change_settings", this.state.changedSettings);
+  }
+
+  private isEqual(s1: Settings, s2: Settings) {
+    console.log(JSON.stringify(s1));
+    console.log(JSON.stringify(s2));
+    return JSON.stringify(s1)===JSON.stringify(s2);
   }
 }

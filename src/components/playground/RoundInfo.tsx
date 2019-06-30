@@ -23,7 +23,9 @@ export default class RoundInfo extends React.Component<Props, State> {
       bigBlind: 0,
       hand: 0
     };
+  }
 
+  componentDidMount(): void {
     this.registerListeners();
   }
 

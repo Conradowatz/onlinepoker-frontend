@@ -33,6 +33,9 @@ export default class Chat extends React.Component<Props, State> {
     };
 
     this.chatContainer = null;
+  }
+
+  componentDidMount(): void {
     this.registerListeners();
   }
 

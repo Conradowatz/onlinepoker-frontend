@@ -24,6 +24,7 @@ interface Props {
 export default class LobbyList extends React.Component<Props, State> {
 
   private selectedLobby?: string;
+  private refreshId?: number;
 
   constructor(props: Props) {
     super(props);
@@ -32,8 +33,15 @@ export default class LobbyList extends React.Component<Props, State> {
       showCreateLobbyDialog: false,
       lobbies: []
     };
+  }
 
+  componentDidMount(): void {
     this.refreshLobbies();
+    this.refreshId = window.setInterval(() => this.refreshLobbies(), 3*1000);
+  }
+
+  componentWillUnmount(): void {
+    window.clearInterval(this.refreshId);
   }
 
   render() {

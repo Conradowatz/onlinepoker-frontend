@@ -29,7 +29,10 @@ export default class Game extends React.Component<Props, State> {
             shownError: null
         };
 
+        //DEV
         this.api = new PokerClient("ws://"+window.location.hostname+":8080", true);
+        //PRODUCTION
+        //this.api = new PokerClient("wss://"+window.location.host, true);
         this.connectToServer();
     }
     render() {

@@ -36,7 +36,9 @@ export default class ActivePlayerList extends React.Component<Props, State> {
       winners: [],
       winnerCards: []
     };
+  }
 
+  componentDidMount(): void {
     this.registerListeners();
   }
 

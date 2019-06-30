@@ -20,9 +20,10 @@ export default class PlayerList extends React.Component<Props, State> {
     this.state = {
       players: props.players
     };
+  }
 
+  componentDidMount(): void {
     this.registerListeners();
-
   }
 
   render() {

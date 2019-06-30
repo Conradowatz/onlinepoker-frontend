@@ -41,7 +41,9 @@ export default class ActionButtonRow extends React.Component<Props, State> {
       maxRaise: 0,
       firstBet: true
     };
+  }
 
+  componentDidMount(): void {
     this.registerListeners();
   }
 
@@ -64,7 +66,7 @@ export default class ActionButtonRow extends React.Component<Props, State> {
         <div id={"timeoutBar"}/>
         {this.state.isGiveUpDialog &&
             <Dialog buttons={[
-                <button key={0} onClick={() => this.props.onGiveUp()}>Give Up!</button>,
+                <button key={0} onClick={() => {this.takeAction("giveup"); this.props.onGiveUp()}}>Give Up!</button>,
                 <button key={1} onClick={() => this.setState({isGiveUpDialog: false})}>Cancel</button>
             ]} message={"Are you sure?"} title={"Give up..."}/>
         }
@@ -75,7 +77,9 @@ export default class ActionButtonRow extends React.Component<Props, State> {
         ]} message={"How much do you want to bet?"} title={this.state.firstBet?"Bet...":"Raise..."}
         children={
           <div>
-            <input type={"range"} min={this.state.minRaise} max={this.state.maxRaise} value={this.state.value} onChange={(e) => this.setState({value: Number.parseInt(e.target.value)})}/>
+            <div className={"slidecontainer"}>
+              <input type={"range"} className={"slider"} min={this.state.minRaise} max={this.state.maxRaise} value={this.state.value} onChange={(e) => this.setState({value: Number.parseInt(e.target.value)})}/>
+            </div>
             <input type={"number"} min={this.state.minRaise} max={this.state.maxRaise} value={this.state.value} onChange={(e) => this.setState({value: Number.parseInt(e.target.value)})}/>
           </div>
         }/>

@@ -1,15 +1,27 @@
-#settings-inner-container {
-  display: flex;
-  flex-direction: column;
+#settingsTable {
+
 }
 
-#settings-inner-container .setting-row {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 20px;
+#settingsTable td {
+  padding: 5px;
 }
 
-#settings-inner-container .setting-title {
+#settingsTable .title {
   font-weight: bold;
   margin-right: 20px;
+}
+
+.flexrow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+}
+
+.flexrow>* {
+  margin: 0 10px 0 0;
+}
+
+.flexrow>*:last-child {
+  margin-right: 0;
 }
