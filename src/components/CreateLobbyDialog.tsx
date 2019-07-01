@@ -35,12 +35,14 @@ export default class CreateLobbyDialog extends React.Component<Props, State> {
               <div>
                 <p>Your Name:</p>
                 <input
-                    type="text"
+                    type="text" autoFocus
+                    onKeyPress={(e) => this.keyPress(e)}
                     value={this.state.playerName} onChange={(e) => this.checkPlayerName(e)}
                 />
                 <p>Lobby Name:</p>
                 <input
                     type="text"
+                    onKeyPress={(e) => this.keyPress(e)}
                     value={this.state.lobbyName} onChange={(e) => this.checkLobbyName(e)}
                 />
                 <p>Hidden:</p>
@@ -78,5 +80,11 @@ export default class CreateLobbyDialog extends React.Component<Props, State> {
     let playerOk = playerName.trim().length >= 1 && playerName.trim().length <= 20;
     let lobbyOk = lobbyName.trim().length >= 1 && lobbyName.trim().length <= 20;
     return playerOk && lobbyOk;
+  }
+
+  private keyPress(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key==="Enter" && this.state.isOk) {
+      this.props.onCreate(this.state.playerName.trim(), this.state.lobbyName.trim(), this.state.hidden);
+    }
   }
 }
