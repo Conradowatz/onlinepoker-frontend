@@ -30,7 +30,7 @@ export default class JoinLobbyDialog extends React.Component<Props, State> {
                     <div>
                         <p>Your Name:</p>
                         <input
-                            type="text"
+                            type="text" autoFocus
                             onKeyPress={(e) => {if (e.key === "Enter") this.props.onJoin(this.state.name.trim())}}
                             value={this.state.name} onChange={(e) => this.checkName(e)}
                         />
