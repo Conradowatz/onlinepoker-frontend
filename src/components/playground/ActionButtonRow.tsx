@@ -108,6 +108,7 @@ export default class ActionButtonRow extends React.Component<Props, State> {
       availableOptions: message.options,
       timePercentage: message.timeout === 0 ? 0 : 100,
       minRaise: message.minRaise,
+      value: message.minRaise,
       maxRaise: message.maxRaise,
       firstBet: message.firstBet
     });
