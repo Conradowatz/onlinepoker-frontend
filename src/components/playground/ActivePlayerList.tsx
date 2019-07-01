@@ -8,7 +8,8 @@ import {
   THPlayer,
   THPlayerAction
 } from "../../pokerapi/messages/ApiObjects";
-import "../../styles/playground/ActivePlayerList.css"
+import "../../styles/playground/ActivePlayerList.css";
+import Scrollbars from 'react-custom-scrollbars';
 
 interface Props {
   api: PokerClient
@@ -44,16 +45,18 @@ export default class ActivePlayerList extends React.Component<Props, State> {
 
   render() {
     return (
-        <div id={"playerContainer"}>
-          { this.state.players.map((p) =>
-              <THPlayerTile player={p} showCards={p.cards.length>0} key={p.id}
-                            isWinner={this.state.winners.includes(p.id)}
-                            iActive={this.state.turn===p.id}
-                            isBigBlind={this.state.bigBlindPlayer===p.id}
-                            isSmallBlind={this.state.smallBlindPlayer===p.id}
-                            winningCards={this.state.winnerCards}/>)
-          }
-        </div>
+        <Scrollbars id={"playerScrollContainer"}>
+          <div id={"playerContainer"}>
+            { this.state.players.map((p) =>
+                <THPlayerTile player={p} showCards={p.cards.length>0} key={p.id}
+                              isWinner={this.state.winners.includes(p.id)}
+                              iActive={this.state.turn===p.id}
+                              isBigBlind={this.state.bigBlindPlayer===p.id}
+                              isSmallBlind={this.state.smallBlindPlayer===p.id}
+                              winningCards={this.state.winnerCards}/>)
+            }
+          </div>
+        </Scrollbars>
     );
   }
 
