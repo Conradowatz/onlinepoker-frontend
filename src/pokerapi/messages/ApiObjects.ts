@@ -91,9 +91,11 @@ export interface THNewRound extends PokerMessage {
   bigBlindPlayer: number;
 }
 
+export type THPlayerActionType = "call" | "fold" | "check" | "raise" | "allin" | "giveup" | "turn" | "lost";
+
 export interface THPlayerAction extends PokerMessage {
   player: THPlayer;
-  action: "call" | "fold" | "check" | "raise" | "allin" | "giveup" | "turn";
+  action: THPlayerActionType;
   value?: string | number | Player;
 }
 

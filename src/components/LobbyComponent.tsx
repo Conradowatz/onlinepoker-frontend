@@ -10,9 +10,12 @@ import Playground from "./playground/Playground";
 
 interface  State {
   isLeader: boolean,
+  lobby: Lobby,
   spectate: boolean,
+  lost: boolean,
   isGameStarted: boolean,
-  startEvent?: THStartGame
+  startEvent?: THStartGame,
+  playerCount: number
 }
 
 interface Props {
@@ -28,7 +31,10 @@ export default class LobbyComponent extends React.Component<Props, State> {
 
     this.state = {
       isLeader: props.lobby.leader === props.lobby.yourId,
+      lobby: props.lobby,
+      playerCount: Object.getOwnPropertyNames(props.lobby.players).length,
       spectate: !(props.lobby.players.hasOwnProperty(props.lobby.yourId)),
+      lost: false,
       isGameStarted: props.lobby.running
     };
   }
@@ -40,28 +46,28 @@ export default class LobbyComponent extends React.Component<Props, State> {
   render() {
     return (
         <div id={"lobbyContainer"} className={this.getClassName()}>
-          {(!this.state.isGameStarted || this.state.spectate) &&
+          {(!this.state.isGameStarted || this.state.spectate || this.state.lost) &&
           <div className={"buttonRow"}>
             {!this.state.isGameStarted &&
-              <button id={"startGame"} disabled={!this.state.isLeader}
+              <button id={"startGame"} disabled={!this.state.isLeader || this.state.playerCount < 2}
                       onClick={() => this.startGame()}>Start Game</button>
             }
             <button id={"leaveLobby"} onClick={this.props.onLeave}>Leave Lobby</button>
-            <p className={"lobbyName"}>{this.props.lobby.name}</p>
+            <p className={"lobbyName"}>{this.state.lobby.name}</p>
           </div>
           }
           <div id={"content"}>
             {!this.state.isGameStarted &&
-              <SettingsTab api={this.props.api} lobby={this.props.lobby}/>
+              <SettingsTab api={this.props.api} lobby={this.state.lobby}/>
             }
             {this.state.isGameStarted &&
               <Playground api={this.props.api} startEvent={this.state.startEvent}
-                          onLost={() => this.setState({spectate: true})} spectate={this.state.spectate}/>
+                          onLost={() => this.setState({lost: true})} spectate={this.state.spectate || this.state.lost}/>
             }
           </div>
           <Chat api={this.props.api} myId={this.props.lobby.yourId} spectate={this.state.spectate}/>
           {!this.state.isGameStarted &&
-            <PlayerList players={Object.values(this.props.lobby.players)} api={this.props.api}/>
+            <PlayerList players={Object.values(this.state.lobby.players)} api={this.props.api}/>
           }
         </div>
     )
@@ -70,7 +76,7 @@ export default class LobbyComponent extends React.Component<Props, State> {
   private getClassName() {
     let name = "";
     if (this.state.isGameStarted) name += " playing";
-    if (this.state.spectate) name += " spectate";
+    if (this.state.spectate || this.state.lost) name += " spectate";
     return name;
   }
 
@@ -96,6 +102,7 @@ export default class LobbyComponent extends React.Component<Props, State> {
 
   private th_start(message: THStartGame) {
     this.setState({
+      lost: false,
       startEvent: message,
       isGameStarted: true
     });
@@ -103,7 +110,9 @@ export default class LobbyComponent extends React.Component<Props, State> {
 
   private lobby_update(message: Lobby) {
     this.setState({
-      isLeader: message.leader === message.yourId
+      isLeader: message.leader === message.yourId,
+      lobby: message,
+      playerCount: Object.getOwnPropertyNames(message.players).length,
     });
   }
 

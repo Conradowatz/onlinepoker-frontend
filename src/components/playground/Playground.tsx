@@ -1,6 +1,6 @@
 import * as React from "react";
 import "../../styles/playground/Playground.css";
-import {THPlayer, THStartGame} from "../../pokerapi/messages/ApiObjects";
+import {THPlayer, THPlayerAction, THStartGame} from "../../pokerapi/messages/ApiObjects";
 import {PokerClient} from "../../pokerapi/PokerClient";
 import ActionButtonRow from "./ActionButtonRow";
 import RoundInfo from "./RoundInfo";
@@ -44,10 +44,23 @@ export default class Playground extends React.Component<Props> {
 
   private registerListeners() {
 
-    this.props.api.on("th_end_game", (event: THPlayer) => {
+    this.th_end_game = this.th_end_game.bind(this);
+    this.props.api.addListener("th_end_game", this.th_end_game);
+    this.th_lost = this.th_lost.bind(this);
+    this.props.api.addListener("th_lost", this.th_lost);
+  }
 
-    });
+  componentWillUnmount(): void {
+    this.props.api.removeListener("th_end_game", this.th_end_game);
+    this.props.api.removeListener("th_lost", this.th_lost);
+  }
 
+  private th_end_game(winner: THPlayer) {
+
+  }
+
+  private th_lost() {
+    this.props.onLost();
   }
 
 }

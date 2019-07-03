@@ -1,10 +1,10 @@
 #playerScrollContainer {
-  top: 20%;
+  top: 70px;
   left: 0;
   padding: 0 70px;
   width: 100%;
   position: absolute !important;
-  height: 180px !important;
+  height: 160px !important;
 }
 
 #playerContainer {

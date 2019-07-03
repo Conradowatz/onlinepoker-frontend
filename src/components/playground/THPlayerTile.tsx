@@ -71,6 +71,7 @@ export default class THPlayerTile extends React.Component<Props> {
     let classes = "thPlayerTile";
     if (this.props.iActive) classes += " active";
     if (this.props.isWinner) classes += " winner";
+    if (this.props.player.folded) classes += " folded";
     return classes;
   }
 

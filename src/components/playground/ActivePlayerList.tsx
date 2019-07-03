@@ -93,13 +93,6 @@ export default class ActivePlayerList extends React.Component<Props, State> {
       this.setState({
         turn: message.player.id
       });
-    } else if (message.action==="giveup") {
-      //todo find better method, e.g. givenup attribute
-      let players = this.state.players;
-      this.state.players.splice(message.player.index, 1);
-      this.setState({
-        players: players
-      });
     } else {
       let players = this.state.players.slice();
       players[message.player.index] = message.player;
