@@ -31,21 +31,39 @@
 
 #chatInputContainer {
     margin-top: 10px;
-    display: flex;
-    flex-direction: row;
     position: relative;
 }
 
 #chatInput {
     text-align: left;
-    max-width: 200px;
     width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#emojiButton {
+    left: 0;
+    height: 100%;
+    padding: 5px 2px 5px 5px;
+    position: absolute;
+    background: transparent;
+    border-right: 1px solid #34495e;
+    border-radius: 0;
+}
+
+#sendButton {
+    right: 0;
+    height: 100%;
+    padding: 5px;
+    position: absolute;
+    background: transparent;
 }
 
 .emoji-mart{
     width: 260px !important;
     position: absolute;
     bottom: 40px;
+    left: 0;
 }
 
 .emoji-mart-bar {

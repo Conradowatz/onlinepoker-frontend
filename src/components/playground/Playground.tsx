@@ -1,6 +1,6 @@
 import * as React from "react";
 import "../../styles/playground/Playground.css";
-import {THPlayer, THPlayerAction, THStartGame} from "../../pokerapi/messages/ApiObjects";
+import {THPlayer, THStartGame} from "../../pokerapi/messages/ApiObjects";
 import {PokerClient} from "../../pokerapi/PokerClient";
 import ActionButtonRow from "./ActionButtonRow";
 import RoundInfo from "./RoundInfo";

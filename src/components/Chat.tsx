@@ -2,9 +2,10 @@ import React from "react";
 import {PokerClient} from "../pokerapi/PokerClient";
 import {Player, ChatIn, ChatOut} from "../pokerapi/messages/ApiObjects";
 import "../styles/Chat.css";
-import {Picker} from 'emoji-mart';
+import {Picker} from "emoji-mart";
 import Scrollbars from "react-custom-scrollbars";
-import 'emoji-mart/css/emoji-mart.css';
+import "emoji-mart/css/emoji-mart.css";
+import sendImg from "../assets/send.png";
 
 interface ChatMessage {
   sender: Player,
@@ -26,7 +27,8 @@ interface Props {
 
 export default class Chat extends React.Component<Props, State> {
 
-  private chatContainer:Scrollbars|null;
+  private chatContainer:Scrollbars | null;
+  private inputField: HTMLInputElement | null;
 
   constructor(props: Props) {
     super(props);
@@ -37,6 +39,7 @@ export default class Chat extends React.Component<Props, State> {
     };
 
     this.chatContainer = null;
+    this.inputField = null;
   }
 
   componentDidMount(): void {
@@ -54,37 +57,49 @@ export default class Chat extends React.Component<Props, State> {
               </div>
             )}
           </Scrollbars>
-          <div id={"chatInputContainer"}>
-            <input
-                id={"chatInput"}
-                value={this.state.currentMessage} onChange={(e) => this.setState({currentMessage: e.target.value})}
-                onKeyPress={(e) => {if (e.key === "Enter") this.sendMessage()}} disabled={this.props.spectate}
-            />
-            <button onClick={this.togglePicker} id={"emojiBtn"}>😊</button>
-            { this.state.pickerVisible && <Picker onSelect={this.addEmoji} /> }
-            <button onClick={() => this.sendMessage()} disabled={this.props.spectate}>Send</button>
-          </div>
+          {!this.props.spectate &&
+            <div id={"chatInputContainer"}>
+                <input
+                    id={"chatInput"} ref={(c) => this.inputField = c}
+                    value={this.state.currentMessage} onChange={(e) => this.setState({currentMessage: e.target.value})}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") this.sendMessage()
+                    }} disabled={this.props.spectate}
+                />
+                <button onClick={this.togglePicker} id={"emojiButton"}>😊</button>
+              {this.state.pickerVisible &&
+              <Picker onSelect={this.addEmoji} autoFocus native/>
+              }
+                <button onClick={() => this.sendMessage()} id={"sendButton"}>
+                    <img src={sendImg} alt={"Send"}/>
+                </button>
+            </div>
+          }
         </div>
     );
   }
 
-  togglePicker = () => {
+  private togglePicker = () => {
     let { pickerVisible } = this.state;
     pickerVisible = !pickerVisible;
     this.setState({
       pickerVisible,
     })
-  }
+  };
 
-  addEmoji = (emoji: any) => {
+  private addEmoji = (emoji: any) => {
     const { currentMessage } = this.state;
     const text = `${currentMessage}${emoji.native}`;
     console.log(currentMessage);
     console.log(emoji);
     this.setState({
-      currentMessage: text
+      currentMessage: text,
+      pickerVisible: false
     });
-  }
+    if (this.inputField !== null) {
+      this.inputField.focus();
+    }
+  };
 
   componentDidUpdate(): void {
     // scroll down
