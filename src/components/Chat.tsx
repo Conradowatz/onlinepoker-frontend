@@ -1,8 +1,10 @@
 import React from "react";
 import {PokerClient} from "../pokerapi/PokerClient";
 import {Player, ChatIn, ChatOut} from "../pokerapi/messages/ApiObjects";
-import "../styles/Chat.css"
-import Scrollbars from "react-custom-scrollbars"
+import "../styles/Chat.css";
+import {Picker} from 'emoji-mart';
+import Scrollbars from "react-custom-scrollbars";
+import 'emoji-mart/css/emoji-mart.css';
 
 interface ChatMessage {
   sender: Player,
@@ -12,13 +14,14 @@ interface ChatMessage {
 
 interface State {
   messages: ChatMessage[],
-  currentMessage: string
+  currentMessage: string,
+  pickerVisible: boolean
 }
 
 interface Props {
   api: PokerClient,
   myId: number,
-  spectate: boolean
+  spectate: boolean,
 }
 
 export default class Chat extends React.Component<Props, State> {
@@ -29,7 +32,8 @@ export default class Chat extends React.Component<Props, State> {
     super(props);
     this.state = {
       messages: [],
-      currentMessage: ""
+      currentMessage: "",
+      pickerVisible: false
     };
 
     this.chatContainer = null;
@@ -52,13 +56,34 @@ export default class Chat extends React.Component<Props, State> {
           </Scrollbars>
           <div id={"chatInputContainer"}>
             <input
+                id={"chatInput"}
                 value={this.state.currentMessage} onChange={(e) => this.setState({currentMessage: e.target.value})}
                 onKeyPress={(e) => {if (e.key === "Enter") this.sendMessage()}} disabled={this.props.spectate}
             />
+            <button onClick={this.togglePicker} id={"emojiBtn"}>😊</button>
+            { this.state.pickerVisible && <Picker onSelect={this.addEmoji} /> }
             <button onClick={() => this.sendMessage()} disabled={this.props.spectate}>Send</button>
           </div>
         </div>
     );
+  }
+
+  togglePicker = () => {
+    let { pickerVisible } = this.state;
+    pickerVisible = !pickerVisible;
+    this.setState({
+      pickerVisible,
+    })
+  }
+
+  addEmoji = (emoji: any) => {
+    const { currentMessage } = this.state;
+    const text = `${currentMessage}${emoji.native}`;
+    console.log(currentMessage);
+    console.log(emoji);
+    this.setState({
+      currentMessage: text
+    });
   }
 
   componentDidUpdate(): void {
@@ -95,5 +120,8 @@ export default class Chat extends React.Component<Props, State> {
       this.props.api.sendMessage("chat_out", request);
       this.setState({currentMessage: ""});
     }
+    this.setState({
+      pickerVisible: false,
+    })
   }
 }

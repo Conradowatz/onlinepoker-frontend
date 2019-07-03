@@ -1,4 +1,4 @@
-button {
+ button {
     padding: 5px 10px;
     font-size: 1em;
     text-align: center;
@@ -11,9 +11,13 @@ button {
     transition: background 0.2s;
 }
 
-button:hover {
+button:hover:not(.emoji-mart-emoji) {
     background: var(--magenta-dark);
     transition: background 0.2s;
+}
+
+button .emoji-mart-emoji {
+    cursor: pointer;
 }
 
 button:active {
