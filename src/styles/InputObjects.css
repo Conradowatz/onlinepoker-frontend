@@ -11,13 +11,9 @@
     transition: background 0.2s;
 }
 
-button:hover:not(.emoji-mart-emoji) {
+button:hover {
     background: var(--magenta-dark);
     transition: background 0.2s;
-}
-
-button .emoji-mart-emoji {
-    cursor: pointer;
 }
 
 button:active {

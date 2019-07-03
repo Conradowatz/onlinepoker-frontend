@@ -26,6 +26,8 @@ interface State {
 
 export default class ActivePlayerList extends React.Component<Props, State> {
 
+  private scrollContainer: Scrollbars | null;
+
   constructor(props: Props) {
     super(props);
 
@@ -37,6 +39,8 @@ export default class ActivePlayerList extends React.Component<Props, State> {
       winners: [],
       winnerCards: []
     };
+
+    this.scrollContainer = null;
   }
 
   componentDidMount(): void {
@@ -45,7 +49,8 @@ export default class ActivePlayerList extends React.Component<Props, State> {
 
   render() {
     return (
-        <Scrollbars id={"playerScrollContainer"}>
+      <div id={"playerScrollContainer"}>
+        <Scrollbars ref={(s) => this.scrollContainer = s}>
           <div id={"playerContainer"}>
             { this.state.players.map((p) =>
                 <THPlayerTile player={p} showCards={p.cards.length>0} key={p.id}
@@ -57,6 +62,7 @@ export default class ActivePlayerList extends React.Component<Props, State> {
             }
           </div>
         </Scrollbars>
+      </div>
     );
   }
 
@@ -93,6 +99,10 @@ export default class ActivePlayerList extends React.Component<Props, State> {
       this.setState({
         turn: message.player.id
       });
+      if (this.scrollContainer !== null) {
+        let ration = message.player.index/this.state.players.length;
+        this.scrollContainer.scrollLeft(ration*this.scrollContainer.getScrollWidth());
+      }
     } else {
       let players = this.state.players.slice();
       players[message.player.index] = message.player;

@@ -70,3 +70,15 @@
     display: none;
 }
 
+button.emoji-mart-emoji:hover {
+    background: none;
+}
+
+button.emoji-mart-emoji>* {
+    cursor: pointer !important;
+}
+
+button.emoji-mart-emoji {
+    padding: 0;
+}
+
