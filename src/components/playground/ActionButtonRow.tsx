@@ -51,14 +51,14 @@ export default class ActionButtonRow extends React.Component<Props, State> {
     return (
       <div id={"actionButtonRow"}>
         <div id={"actionButtons"}>
+          <button disabled={!this.state.availableOptions.includes("check")}
+                  onClick={() => this.takeAction("check")}>Check</button>
           <button disabled={!this.state.availableOptions.includes("call")}
             onClick={() => this.takeAction("call")}>Call</button>
+          <button disabled={!this.state.availableOptions.includes("raise")}
+                  onClick={() => this.setState({isRaiseDialog: true})}>{this.state.firstBet?"Bet...":"Raise..."}</button>
           <button disabled={!this.state.availableOptions.includes("fold")}
             onClick={() => this.takeAction("fold")}>Fold</button>
-          <button disabled={!this.state.availableOptions.includes("check")}
-            onClick={() => this.takeAction("check")}>Check</button>
-          <button disabled={!this.state.availableOptions.includes("raise")}
-            onClick={() => this.setState({isRaiseDialog: true})}>{this.state.firstBet?"Bet...":"Raise..."}</button>
           <button disabled={!this.state.availableOptions.includes("allin")}
             onClick={() => this.setState({isAllInDialog: true})}>All In…</button>
           <button onClick={() => this.setState({isGiveUpDialog: true})}>Give Up…</button>

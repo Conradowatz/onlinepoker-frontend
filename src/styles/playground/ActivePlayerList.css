@@ -17,7 +17,3 @@
   justify-content: center;
   align-items: center;
 }
-
-#playerContainer>*:first-child {
-  margin-left: 70px;
-}
